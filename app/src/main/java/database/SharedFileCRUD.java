@@ -1,16 +1,12 @@
 package database;
 
-import android.app.Application;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import net.sf.lipermi.net.Server;
-
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import br.ic.ufmt.quick.PoconeTorrent;
 import model.SharedFile;
