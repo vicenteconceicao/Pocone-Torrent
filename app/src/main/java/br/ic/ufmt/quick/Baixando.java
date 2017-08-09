@@ -13,9 +13,6 @@ public class Baixando extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_baixando);
         ProgressBar bar = (ProgressBar)findViewById(R.id.progressBar1);
-        TextView textView = (TextView)findViewById(R.id.dadosEnviados);
-        if(bar.getProgress()!=100){
-            textView.setVisibility(View.INVISIBLE);
-        }
+
     }
 }
