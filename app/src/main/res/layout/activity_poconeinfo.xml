@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorLight"
     tools:context="br.ic.ufmt.quick.Compartilhamento">
 
     <LinearLayout
@@ -12,55 +13,102 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_logo"
+                android:layout_gravity="center"
+                android:layout_weight="4"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Informações do Torrent a ser baixado"
+                android:layout_margin="10dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_weight="10"
-                android:layout_margin="10dp">
+                android:layout_weight="20"
+                android:layout_margin="4dp"
+                android:background="#FFF">
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nome Arquivo"
-                    android:textStyle="bold"
-                    android:textSize="20dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sistema Operacional Windows 10 x64"
-                    android:textSize="20dp"
-                    android:layout_marginBottom="10dp"/>
-
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tamanho"
-                    android:textStyle="bold"
-                    android:textSize="20dp"/>
+                    android:orientation="horizontal"
+                    android:background="@color/colorLight"
+                    android:layout_margin="4dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="5 Gb"
-                    android:textSize="20dp"
-                    android:layout_marginBottom="10dp"/>
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nome Arquivo"
+                        android:textStyle="bold"
+                        android:layout_weight="1"/>
 
-                <TextView
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sistema Operacional Windows 10 x64"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Peers"
-                    android:textStyle="bold"
-                    android:textSize="20dp"/>
+                    android:orientation="horizontal"
+                    android:layout_margin="4dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tamanho"
+                        android:textStyle="bold"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="5 Gb"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="12"
-                    android:textSize="20dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:orientation="horizontal"
+                    android:background="@color/colorLight"
+                    android:layout_margin="4dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Peers"
+                        android:textStyle="bold"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="12"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"/>
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -69,7 +117,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_weight="1">
+            android:layout_gravity="bottom">
 
             <Button
                 android:id="@+id/button5"
@@ -77,20 +125,20 @@
                 android:layout_height="match_parent"
                 android:text="Iniciar"
                 android:textSize="12dp"
-                android:background="@color/colorSecudary"
+                android:background="@drawable/button_confirm"
                 android:layout_margin="2dp"
                 android:layout_weight="1"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@color/colorLight"/>
             <Button
                 android:id="@+id/button6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="12dp"
-                android:background="@color/colorDanger"
+                android:background="@drawable/button_cancel"
                 android:text="Cancelar"
                 android:layout_margin="2dp"
                 android:layout_weight="1"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@color/colorPrimaryDark"/>
 
         </LinearLayout>
     </LinearLayout>

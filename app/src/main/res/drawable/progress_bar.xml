@@ -6,7 +6,7 @@
         <clip>
 
             <shape>
-                <solid android:color="@color/colorSecudary"/>
+                <solid android:color="@color/colorDanger"/>
             </shape>
 
         </clip>

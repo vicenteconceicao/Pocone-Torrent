@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#4CAF50</color>
-    <color name="colorPrimaryDark">#388E3C</color>
+    <color name="colorPrimary">#C6502C</color>
+    <color name="colorPrimaryDark">#221D19</color>
+    <color name="colorBackground">#E6E5E1</color>
+    <color name="colorLight">#F1F1F1</color>
+
     <color name="colorAccent">#333745</color>
     <color name="colorSecudary">#A5D6A7</color>
     <color name="colorDefault">#E0E0E0</color>
-    <color name="colorDanger">#FFCDD2</color>
-    <color name="colorLight">#F5F5F5</color>
+    <color name="colorDanger">#c7836e</color>
+
+    <color name="icePrimary">#6888B1</color>
+    <color name="icePrimaryDark">#212E37</color>
+    <color name="iceLight">#ECF1F7</color>
+    <color name="iceLightDark">#CCE3F3</color>
+    <color name="iceDarkLight">#BBCEDF</color>
+
+    <color name="webHostBandLight">#E7F3EF</color>
+    <color name="webHostBandBrown">#8C6429</color>
+    <color name="webHostBandRed">#E24B2C</color>
+    <color name="webHostBandDark">#73726D</color>
+    <color name="webHostBandBlue">#55C3DC</color>
+
 </resources>
