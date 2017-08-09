@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.File;
 
@@ -15,29 +16,51 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = (Button) findViewById(R.id.editText3);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickCompartilhar();
-            }
-        });
-
-        Button button1 = (Button) findViewById(R.id.editText4);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickBuscar();
-            }
-        });
-
         Button button2 = (Button) findViewById(R.id.button);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                onClickChooseFile();
+            }
+        });
+
+        Button btnDownload = (Button) findViewById(R.id.btn_downloads);
+        btnDownload.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View view){
+                onClickDownloads();
+            }
+        });
+
+        Button btnCompartilhar = (Button) findViewById(R.id.btn_compartilhar);
+        btnCompartilhar.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View view){
                 onClickCompartilhar();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        TextView nomeArq = (TextView) findViewById(R.id.nome_arquivo);
+
+        if(data != null) {
+            nomeArq.setText(data.getData().getPath());
+            Intent intent = new Intent(this, Compartilhamento.class);
+            intent.putExtra("path", data.getData().getPath());
+            startActivity(intent);
+        }
+    }
+
+
+
+    public void onClickChooseFile(){
+        Intent intent = new Intent();
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Selecionar arquivo"), 1);
     }
 
     public void onClickCompartilhar(){
@@ -50,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onCLickChooser(){
-
+    public void onClickDownloads(){
+        Intent intent = new Intent(this, Baixando.class);
+        startActivity(intent);
     }
 }

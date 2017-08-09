@@ -59,6 +59,7 @@
                         android:layout_weight="1"/>
 
                     <TextView
+                        android:id="@+id/fileName1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Sistema Operacional Windows 10 x64"
@@ -120,7 +121,7 @@
             android:layout_gravity="bottom">
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/btn_inciar_torrent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Iniciar"
@@ -130,7 +131,7 @@
                 android:layout_weight="1"
                 android:textColor="@color/colorLight"/>
             <Button
-                android:id="@+id/button6"
+                android:id="@+id/btn_cancelar_torrent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="12dp"

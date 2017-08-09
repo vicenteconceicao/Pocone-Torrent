@@ -19,4 +19,5 @@
         <activity android:name=".Compartilhamento" />
         <activity android:name=".Baixando" />
     </application>
+
 </manifest>
