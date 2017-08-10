@@ -34,6 +34,7 @@
 
         </LinearLayout>
 
+        <!--Para modificar o layout do ListView, altere o layout item_shared_file.xml-->
         <ListView
             android:id="@+id/list_pocone"
             android:layout_width="match_parent"
