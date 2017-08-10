@@ -9,18 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class DownloadInfo extends AppCompatActivity {
 import net.sf.lipermi.handler.CallHandler;
 import net.sf.lipermi.net.Client;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -40,7 +34,7 @@ public class DownloadInfo extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        TextView fileName = (TextView) findViewById(R.id.fileName1);
+        final TextView fileName = (TextView) findViewById(R.id.fileName1);
         fileName.setText(intent.getStringExtra("path"));
 
         Button btnCancelar = (Button) findViewById(R.id.btn_cancelar_torrent);
