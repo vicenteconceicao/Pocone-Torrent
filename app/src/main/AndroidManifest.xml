@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.ic.ufmt.quick">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".PoconeTorrent"
         android:allowBackup="true"
@@ -10,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,6 +22,8 @@
         </activity>
         <activity android:name=".Compartilhamento" />
         <activity android:name=".Baixando" />
+        <service android:name="rmi.ServerRMI" />
+
     </application>
 
 </manifest>

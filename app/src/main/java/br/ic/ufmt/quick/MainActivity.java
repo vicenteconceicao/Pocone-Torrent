@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.io.File;
 
+import rmi.ServerRMI;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -39,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
                 onClickCompartilhar();
             }
         });
+
+        Intent intent = new Intent(this, ServerRMI.class);
+        startService(intent);
     }
 
     @Override
@@ -53,7 +58,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        Intent intent = new Intent(this, ServerRMI.class);
+        stopService(intent);
+        super.onDestroy();
+    }
 
     public void onClickChooseFile(){
         Intent intent = new Intent();
