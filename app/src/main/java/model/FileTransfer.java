@@ -32,6 +32,7 @@ public class FileTransfer implements FileTransferInterface {
             FileInputStream fis = new FileInputStream(f);
             byte[] bytes = new byte[sf.getSize()];
             fis.read(bytes);
+            fis.close();
             hm.put("filename", f.getName());
             hm.put("size", sf.getSize());
             hm.put("fileContent", bytes);

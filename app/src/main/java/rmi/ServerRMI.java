@@ -41,7 +41,6 @@ public class ServerRMI extends Service {
         CallHandler callHandler = new CallHandler();
         FileTransfer ft = new FileTransfer();
         try {
-            Log.d("Conexao", "entrou");
             callHandler.registerGlobal(FileTransferInterface.class, ft);
             Server server = new Server();
             server.bind(5000, callHandler);
