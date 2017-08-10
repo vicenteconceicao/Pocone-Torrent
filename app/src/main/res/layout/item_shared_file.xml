@@ -14,42 +14,74 @@
         android:progress="2"
         android:progressDrawable="@drawable/progress_bar"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nome Arquivo"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/filename"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"/>
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tamanho"
-                android:textStyle="bold"/>
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nome Arquivo"
+                    android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"/>
+                <TextView
+                    android:id="@+id/filename"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"/>
 
-            <TextView
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tamanho"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Data"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Data"
-                android:textStyle="bold"/>
+                android:layout_weight="3"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"/>
+                <Button
+                    android:id="@+id/btnSharedBaixar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Baixar"
+                    android:textColor="@color/colorLight"
+                    android:background="@drawable/button_confirm"/>
 
+                <Button
+                    android:id="@+id/btnSharedApagar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Apagar"
+                    android:background="@drawable/button_cancel"/>
+
+            </LinearLayout>
+        </LinearLayout>
 
 </LinearLayout>

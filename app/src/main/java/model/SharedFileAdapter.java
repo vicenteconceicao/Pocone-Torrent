@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,13 +38,39 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
         TextView sharedFileSize = (TextView) convertView.findViewById(R.id.size);
         TextView sharedFileData = (TextView) convertView.findViewById(R.id.data);
 
+        //Looup view for event population
+        Button sharedFileButtonBaixar = (Button) convertView.findViewById(R.id.btnSharedBaixar);
+        Button sharedFileButtonApagar = (Button) convertView.findViewById(R.id.btnSharedApagar);
+
         // Populate the data into the template view using the data object
         sharedFileName.setText(sharedFile.getFilename());
         sharedFileSize.setText(sharedFile.getSize()+"");
         sharedFileData.setText(sharedFile.getData().toString());
 
+        // Populate the event
+        sharedFileButtonBaixar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickBtnBaixar();
+            }
+        });
+        sharedFileButtonApagar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickBtnApagar();
+            }
+        });
+
         //return the completed view to render on screen
         return convertView;
+    }
+
+    public void onClickBtnBaixar(){
+
+    }
+
+    public void onClickBtnApagar(){
+
     }
 
 }
