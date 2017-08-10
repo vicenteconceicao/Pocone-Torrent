@@ -66,8 +66,4 @@ public class SharedFile {
         this.status = status;
     }
 
-    @Override
-    public String toString(){
-        return "Hash: "+hash+"\nData: "+data+"\nNome: "+filename+"\nTamanho: "+size+"\nStatus: "+status;
-    }
 }

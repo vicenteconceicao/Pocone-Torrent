@@ -8,11 +8,13 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import database.SharedFileCRUD;
 import model.SharedFile;
+import model.SharedFileAdapter;
 
 public class Baixando extends AppCompatActivity {
 
@@ -22,14 +24,29 @@ public class Baixando extends AppCompatActivity {
         setContentView(R.layout.activity_baixando);
         //ProgressBar bar = (ProgressBar)findViewById(R.id.progressBar1);
 
+        populateSharedFileList();
+
+    }
+
+    public void populateSharedFileList(){
+
         SharedFileCRUD dbHelper = new SharedFileCRUD();
-        List<SharedFile> pocones =  dbHelper.findAll();
-        pocones.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
 
-        ArrayAdapter<SharedFile> adapter = new ArrayAdapter<SharedFile>(this, android.R.layout.simple_list_item_activated_1, pocones);
+        ArrayList<SharedFile> files = (ArrayList<SharedFile>) dbHelper.findAll();
 
-        ListView listaDePocone = (ListView) findViewById(R.id.list_pocone);
-        listaDePocone.setAdapter(adapter);
+        files.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
+        files.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
+        files.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
+        files.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
+        files.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
+        files.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
+        files.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
+        files.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
 
+        SharedFileAdapter adapter = new SharedFileAdapter(this, files);
+
+        ListView listView = (ListView) findViewById(R.id.list_pocone);
+
+        listView.setAdapter(adapter);
     }
 }
