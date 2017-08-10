@@ -25,7 +25,7 @@
         <service android:name="rmi.ServerRMI" />
 
         <activity android:name=".CompartInfo" />
-        <activity android:name=".CompartSelectFile"></activity>
+        <activity android:name=".CompartSelectFile" />
     </application>
 
 </manifest>
