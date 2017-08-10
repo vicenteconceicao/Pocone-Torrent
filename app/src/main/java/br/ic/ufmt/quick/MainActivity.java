@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.File;
-
 import rmi.ServerRMI;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(data != null) {
             nomeArq.setText(data.getData().getPath());
-            Intent intent = new Intent(this, Compartilhamento.class);
+            Intent intent = new Intent(this, DownloadInfo.class);
             intent.putExtra("path", data.getData().getPath());
             startActivity(intent);
         }
@@ -74,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickCompartilhar(){
-        Intent intent = new Intent(this, Compartilhamento.class);
+        Intent intent = new Intent(this, CompartSelectFile.class);
         startActivity(intent);
     }
 

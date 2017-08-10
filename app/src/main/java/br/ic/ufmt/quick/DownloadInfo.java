@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+public class DownloadInfo extends AppCompatActivity {
 import net.sf.lipermi.handler.CallHandler;
 import net.sf.lipermi.net.Client;
 
@@ -30,16 +31,16 @@ import model.Peer;
 import model.PoconeTorrentFile;
 import model.TorrentFileHelper;
 
-public class Compartilhamento extends AppCompatActivity {
+public class DownloadInfo extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_poconeinfo);
+        setContentView(R.layout.activity_download_info);
 
         Intent intent = getIntent();
 
-        final TextView fileName = (TextView) findViewById(R.id.fileName1);
+        TextView fileName = (TextView) findViewById(R.id.fileName1);
         fileName.setText(intent.getStringExtra("path"));
 
         Button btnCancelar = (Button) findViewById(R.id.btn_cancelar_torrent);
