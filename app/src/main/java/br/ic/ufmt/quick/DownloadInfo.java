@@ -7,12 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Compartilhamento extends AppCompatActivity {
+public class DownloadInfo extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_poconeinfo);
+        setContentView(R.layout.activity_download_info);
 
         Intent intent = getIntent();
 
