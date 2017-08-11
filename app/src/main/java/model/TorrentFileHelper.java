@@ -1,5 +1,6 @@
 package model;
 
+import android.content.res.AssetFileDescriptor;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -63,22 +64,18 @@ public class TorrentFileHelper {
         return null;
     }
 
-    public static PoconeTorrentFile readPoconeTorrentFile(File torrentFile){
+    public static PoconeTorrentFile readPoconeTorrentFile(AssetFileDescriptor torrentFile){
         File f = new File(torrentsFolder);
         if (!f.exists()){
             f.mkdir();
         }
 
-        if (!torrentFile.exists()) {
-            Log.d("Conexao", "Arquivo .pocone não encontrado!");
-            return null;
-        }
         PoconeTorrentFile ptf = new PoconeTorrentFile();
         try {
-            BufferedReader br = new BufferedReader(new FileReader(torrentFile));
+            BufferedReader br = new BufferedReader(new FileReader(torrentFile.getFileDescriptor()));
             String txt = "";
             while (br.ready()){
-                txt += br.readLine();
+                txt += br.readLine() + "\n";
             }
             String[] lines = txt.split("\n");
             if (lines.length != 5){

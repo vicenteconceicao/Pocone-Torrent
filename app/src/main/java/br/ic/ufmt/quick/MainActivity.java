@@ -1,11 +1,17 @@
 package br.ic.ufmt.quick;
 
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 import rmi.ServerRMI;
 
@@ -51,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         if(data != null) {
             nomeArq.setText(data.getData().getPath());
             Intent intent = new Intent(this, DownloadInfo.class);
-            intent.putExtra("path", data.getData().getPath());
+            intent.putExtra("path", data.getData());
             startActivity(intent);
         }
     }
