@@ -30,24 +30,16 @@
             android:background="@color/colorPrimary">
 
             <Button
+                android:layout_margin="4dp"
                 android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Selecionar arquivo"
+                android:text="Selecionar arquivo .pocone para baixar"
                 android:layout_weight="1"
-                android:background="@drawable/button_input_file"
+                android:textColor="@color/colorLight"
+                android:background="@color/colorPrimary"
                 android:drawableLeft="@drawable/ic_action_name"
                 android:layout_gravity="center"/>
-
-            <TextView
-                android:id="@+id/nome_arquivo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nenhum arquivo selecionado"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:textColor="@color/colorLight"
-                android:layout_margin="10dp"/>
 
         </LinearLayout>
 

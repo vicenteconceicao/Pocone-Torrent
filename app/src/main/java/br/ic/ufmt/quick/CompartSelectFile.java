@@ -34,10 +34,8 @@ public class CompartSelectFile extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        TextView nomeArq = (TextView) findViewById(R.id.nome_arquivo);
 
         if(data != null) {
-            nomeArq.setText(data.getData().getPath());
             Intent intent = new Intent(this, CompartInfo.class);
             intent.putExtra("path", data.getData());
             startActivity(intent);

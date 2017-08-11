@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="10dp">
+            android:background="@drawable/layout_fixed_bar">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -38,8 +38,8 @@
         <ListView
             android:id="@+id/list_pocone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            android:divider="@color/colorLight">
         </ListView>
 
     </LinearLayout>
