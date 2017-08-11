@@ -66,10 +66,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if(data != null) {
-            Intent intent = new Intent(this, DownloadInfo.class);
-            intent.putExtra("path", data.getData());
-            startActivity(intent);
+        if(requestCode == 44 && resultCode == Activity.RESULT_OK){
+            if(data != null) {
+                Intent intent = new Intent(this, DownloadInfo.class);
+                intent.putExtra("path", data.getData());
+                startActivity(intent);
+            }
         }
     }
 
@@ -84,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("*/*");
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Selecionar arquivo"), 1);
+        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+        startActivityForResult(Intent.createChooser(intent,"Selecionar arquivo"), 44);
     }
 
     public void onClickCompartilhar(){

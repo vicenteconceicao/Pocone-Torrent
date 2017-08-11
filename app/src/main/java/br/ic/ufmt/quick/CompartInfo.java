@@ -61,7 +61,8 @@ public class CompartInfo extends AppCompatActivity {
         }
 
         final SharedFile sf = new SharedFile();
-        sf.setFilename(fileUri.getPath());
+        sf.setFilename(fileUri.toString());
+        Log.d("Conexao", "name: "+fileUri.toString());
         sf.setStatus(1);
         sf.setSize((int) afd.getLength());
         sf.setDate(new Date(new java.util.Date().getTime()));

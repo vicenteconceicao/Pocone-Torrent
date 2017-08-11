@@ -1,5 +1,7 @@
 package model;
 
+import android.content.res.AssetFileDescriptor;
+import android.net.Uri;
 import android.util.Log;
 
 import java.io.File;
@@ -8,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 
+import br.ic.ufmt.quick.PoconeTorrent;
 import database.SharedFileCRUD;
 
 /**
@@ -22,18 +25,25 @@ public class FileTransfer implements FileTransferInterface {
         HashMap<String, Object> hm = new HashMap<>();
         SharedFileCRUD sfCRUD = new SharedFileCRUD();
         SharedFile sf = sfCRUD.find(hash);
-        if (sf == null)
+        if (sf == null) {
+            Log.d("Conexao", "Nao achou Hash no SQLite");
             return hm;
-        File f = new File(sf.getFilename());
-        if (!f.exists())
+        }
+        AssetFileDescriptor f = null;
+        try {
+            f = PoconeTorrent.getContext().getApplicationContext().getContentResolver().openAssetFileDescriptor(Uri.parse(sf.getFilename()), "r");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.d("Conexao", e.getMessage());
             return hm;
+        }
 
         try {
-            FileInputStream fis = new FileInputStream(f);
+            FileInputStream fis = f.createInputStream();
             byte[] bytes = new byte[sf.getSize()];
             fis.read(bytes);
             fis.close();
-            hm.put("filename", f.getName());
+            hm.put("filename", sf.getFilename());
             hm.put("size", sf.getSize());
             hm.put("fileContent", bytes);
 
