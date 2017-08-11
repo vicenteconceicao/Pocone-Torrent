@@ -27,5 +27,4 @@
         <activity android:name=".CompartInfo" />
         <activity android:name=".CompartSelectFile" />
     </application>
-
 </manifest>
