@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -34,14 +35,14 @@ public class Baixando extends AppCompatActivity {
 
         ArrayList<SharedFile> files = (ArrayList<SharedFile>) dbHelper.findAll();
 
-        files.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
-        files.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
-        files.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
-        files.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
-        files.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
-        files.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
-        files.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
-        files.add(new SharedFile("019283129787382739127",new GregorianCalendar().getGregorianChange(), "Windows 10", 10,10));
+        files.add(new SharedFile("019283129787382739127",new Date(new java.util.Date().getTime()), "Windows 10", 10,10));
+        files.add(new SharedFile("019283129787382739127",new Date(new java.util.Date().getTime()), "Windows 10", 10,10));
+        files.add(new SharedFile("019283129787382739127",new Date(new java.util.Date().getTime()), "Windows 10", 10,10));
+        files.add(new SharedFile("019283129787382739127",new Date(new java.util.Date().getTime()), "Windows 10", 10,10));
+        files.add(new SharedFile("019283129787382739127",new Date(new java.util.Date().getTime()), "Windows 10", 10,10));
+        files.add(new SharedFile("019283129787382739127",new Date(new java.util.Date().getTime()), "Windows 10", 10,10));
+        files.add(new SharedFile("019283129787382739127",new Date(new java.util.Date().getTime()), "Windows 10", 10,10));
+        files.add(new SharedFile("019283129787382739127",new Date(new java.util.Date().getTime()), "Windows 10", 10,10));
 
         SharedFileAdapter adapter = new SharedFileAdapter(this, files);
 

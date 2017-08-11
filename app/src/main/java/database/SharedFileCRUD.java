@@ -32,12 +32,12 @@ public class SharedFileCRUD {
         values.put("hash", sf.getHash());
         values.put("filename", sf.getFilename());
         values.put("size", sf.getSize());
-        values.put("data", sf.getData().toString());
+        values.put("data", sf.getDate().toString());
         values.put("status", sf.getStatus());
 
         // Insert the new row, returning the primary key value of the new row
         long r = db.insert("SharedFile", null, values);
-
+        db.close();
         return r != -1;
     }
 
@@ -49,7 +49,7 @@ public class SharedFileCRUD {
         String[] selectionArgs = { hash };
         // Issue SQL statement.
         int r = db.delete("SharedFile", selection, selectionArgs);
-
+        db.close();
         return r != 0;
     }
 
@@ -83,11 +83,12 @@ public class SharedFileCRUD {
         if (!c.moveToFirst())
             return null;
         sf.setHash(c.getString(0));
-        sf.setData(Date.valueOf(c.getString(1)));
+        sf.setDate(Date.valueOf(c.getString(1)));
         sf.setFilename(c.getString(2));
         sf.setSize(c.getInt(3));
         sf.setStatus(c.getInt(4));
         c.close();
+        db.close();
         return sf;
     }
 
@@ -124,13 +125,14 @@ public class SharedFileCRUD {
         do {
             SharedFile sf = new SharedFile();
             sf.setHash(c.getString(0));
-            sf.setData(Date.valueOf(c.getString(1)));
+            sf.setDate(Date.valueOf(c.getString(1)));
             sf.setFilename(c.getString(2));
             sf.setSize(c.getInt(3));
             sf.setStatus(c.getInt(4));
             lsf.add(sf);
         } while (c.moveToNext());
         c.close();
+        db.close();
         return lsf;
     }
 
@@ -140,7 +142,7 @@ public class SharedFileCRUD {
         // New value for one column
         ContentValues values = new ContentValues();
         values.put("hash", sf.getHash());
-        values.put("data", sf.getData().toString());
+        values.put("data", sf.getDate().toString());
         values.put("filename", sf.getFilename());
         values.put("size", sf.getSize());
         values.put("status", sf.getStatus());
@@ -154,7 +156,8 @@ public class SharedFileCRUD {
                 values,
                 selection,
                 selectionArgs);
-
+        db.close();
         return count != 0;
     }
+
 }

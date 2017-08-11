@@ -1,7 +1,6 @@
 package model;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +35,7 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
         // Lookup view for data population
         TextView sharedFileName = (TextView) convertView.findViewById(R.id.filename);
         TextView sharedFileSize = (TextView) convertView.findViewById(R.id.size);
-        TextView sharedFileData = (TextView) convertView.findViewById(R.id.data);
+        TextView sharedFileData = (TextView) convertView.findViewById(R.id.date);
 
         //Looup view for event population
         Button sharedFileButtonBaixar = (Button) convertView.findViewById(R.id.btnSharedBaixar);
@@ -45,7 +44,7 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
         // Populate the data into the template view using the data object
         sharedFileName.setText(sharedFile.getFilename());
         sharedFileSize.setText(sharedFile.getSize()+"");
-        sharedFileData.setText(sharedFile.getData().toString());
+        sharedFileData.setText(sharedFile.getDate().toString());
 
         // Populate the event
         sharedFileButtonBaixar.setOnClickListener(new View.OnClickListener() {

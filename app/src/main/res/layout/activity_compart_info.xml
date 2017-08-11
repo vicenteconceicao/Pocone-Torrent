@@ -97,7 +97,7 @@
             android:layout_gravity="bottom">
 
             <Button
-                android:id="@+id/btn_inciar_torrent"
+                android:id="@+id/btn_iniciar_compart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Compartilhar"
@@ -108,7 +108,7 @@
                 android:textColor="@color/colorLight"
                 tools:ignore="ButtonStyle" />
             <Button
-                android:id="@+id/btn_cancelar_torrent"
+                android:id="@+id/btn_cancelar_compart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="12dp"

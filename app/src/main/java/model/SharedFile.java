@@ -1,6 +1,7 @@
 package model;
 
-import java.util.Date;
+
+import java.sql.Date;
 
 /**
  * Created by horgun on 09/08/17.
@@ -9,14 +10,14 @@ import java.util.Date;
 
 public class SharedFile {
     private String hash;
-    private Date data;
+    private Date date;
     private String filename;
     private int size;
     private int status;
 
-    public SharedFile(String hash, Date data, String filename, int size, int status) {
+    public SharedFile(String hash, Date date, String filename, int size, int status) {
         this.hash = hash;
-        this.data = data;
+        this.date = date;
         this.filename = filename;
         this.size = size;
         this.status = status;
@@ -34,12 +35,12 @@ public class SharedFile {
         this.hash = hash;
     }
 
-    public Date getData() {
-        return data;
+    public Date getDate() {
+        return date;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getFilename() {

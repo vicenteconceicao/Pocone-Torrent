@@ -18,8 +18,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -69,16 +68,8 @@ public class DownloadInfo extends AppCompatActivity {
     }
 
     private void baixar(Uri fileUri){
-        Log.d("Conexao", "ENTROUU AQUI");
-        AssetFileDescriptor afd = null;
-        try {
-            afd = getContentResolver().openAssetFileDescriptor(fileUri, "r");
-        } catch (FileNotFoundException e) {
-            Log.d("Conexao", "Arquivo .pocone não encontrado.");
-            return;
-        }
-        Log.d("Conexao", "Oiiiii");
-        final PoconeTorrentFile ptf = TorrentFileHelper.readPoconeTorrentFile(afd);
+
+        final PoconeTorrentFile ptf = TorrentFileHelper.readPoconeTorrentFile(fileUri);
         if (ptf == null){
             Log.d("Conexao", "Falha ao baixar arquivo!");
             return;
@@ -86,8 +77,6 @@ public class DownloadInfo extends AppCompatActivity {
 
         Log.d("Conexao", "PoconeTorretFile: " + ptf.getFilename());
 
-
-        final AssetFileDescriptor finalAfd = afd;
         new Thread(){
             @Override
             public void run() {
@@ -112,7 +101,6 @@ public class DownloadInfo extends AppCompatActivity {
                     Log.d("Conexao", "Passou aqui2");
                     FileTransferInterface fti = (FileTransferInterface) c.getGlobal(FileTransferInterface.class);
                     HashMap<String, Object> hm = fti.getFile(ptf.getHash());
-                    finalAfd.close();
                     Log.d("Conexao", "Passou aqui2");
 
 
@@ -126,7 +114,7 @@ public class DownloadInfo extends AppCompatActivity {
                     c.close();
 
                     SharedFileCRUD sfc = new SharedFileCRUD();
-                    SharedFile sf = new SharedFile(ptf.getHash(), new Date(), toSave.getAbsolutePath(), (int)toSave.length(), 1);
+                    SharedFile sf = new SharedFile(ptf.getHash(), new Date(new java.util.Date().getTime()), toSave.getAbsolutePath(), (int)toSave.length(), 1);
                     sfc.insert(sf);
                     Log.d("Conexao", "Inseriu no sqlite");
 
