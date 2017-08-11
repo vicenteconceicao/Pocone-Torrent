@@ -2,9 +2,12 @@ package rmi;
 
 import android.app.Service;
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
+import android.text.format.Formatter;
 import android.util.Log;
 
 import net.sf.lipermi.exception.LipeRMIException;
@@ -13,8 +16,10 @@ import net.sf.lipermi.net.IServerListener;
 import net.sf.lipermi.net.Server;
 
 import java.io.IOException;
+import java.net.NetworkInterface;
 import java.net.Socket;
 
+import br.ic.ufmt.quick.PoconeTorrent;
 import model.FileTransfer;
 import model.FileTransferInterface;
 import model.HashManagerInterface;
@@ -24,6 +29,8 @@ import model.HashManagerInterface;
  */
 
 public class ServerRMI extends Service {
+    public static int serverPort = 5000;
+    public static String serverIP = "";
 
     @Nullable
     @Override
@@ -57,6 +64,16 @@ public class ServerRMI extends Service {
                 }
             });
             Log.d("Conexao", "ServerRMI on!");
+
+//            serverIP = NetworkInterface.getNetworkInterfaces().nextElement().getInetAddresses().nextElement().getHostAddress();
+            WifiManager wifiMgr = (WifiManager) PoconeTorrent.getContext().getApplicationContext().getSystemService(WIFI_SERVICE);
+            WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
+            int ip = wifiInfo.getIpAddress();
+
+            serverIP = Formatter.formatIpAddress(ip);
+
+            Log.d("Conexao", "O ip do servidor: " + serverIP);
+
         } catch (LipeRMIException e) {
             e.printStackTrace();
         } catch (IOException e) {
