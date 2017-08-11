@@ -94,20 +94,28 @@ public class DownloadInfo extends AppCompatActivity {
                 try {
                     //pegar peers com o tracker
                     CallHandler call = new CallHandler();
-                    Log.d("Conexao", "IP: " + ptf.getTrackerAddress() + ":" + ptf.getTrackerPort());
                     Client c = new Client(ptf.getTrackerAddress(), ptf.getTrackerPort(), call);
                     HashManagerInterface hmi = (HashManagerInterface) c.getGlobal(HashManagerInterface.class);
                     List<Peer> peers = hmi.getPeers(ptf.getHash());
                     c.close();
-                    Log.d("Conexao", "Passou aqui1");
+
+                    if (peers == null){//Colocar aviso para o usuário (dialog)
+                        Log.d("Conexao", "Nao existem peers com esse hash!");
+                        return;
+                    }
+
                     Peer p = getRandomPeer(peers);
 
                     //baixar arquivo
+                    Log.d("Conexao", "Chegou aqui");
                     c = new Client(p.getIp(), p.getPort(), call);
+                    Log.d("Conexao", "Passou aqui2");
                     FileTransferInterface fti = (FileTransferInterface) c.getGlobal(FileTransferInterface.class);
                     HashMap<String, Object> hm = fti.getFile(ptf.getHash());
                     finalAfd.close();
                     Log.d("Conexao", "Passou aqui2");
+
+
                     File toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + hm.get("filename"));
 
                     FileOutputStream fos = new FileOutputStream(toSave);
