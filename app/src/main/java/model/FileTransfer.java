@@ -39,8 +39,10 @@ public class FileTransfer implements FileTransferInterface {
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            Log.d("Conexao", e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
+            Log.d("Conexao", e.getMessage());
         }
 
         return hm;

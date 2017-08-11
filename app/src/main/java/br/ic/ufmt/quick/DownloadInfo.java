@@ -103,6 +103,9 @@ public class DownloadInfo extends AppCompatActivity {
                     HashMap<String, Object> hm = fti.getFile(ptf.getHash());
                     Log.d("Conexao", "Passou aqui2");
 
+                    if (hm.isEmpty()){
+                        Log.d("Conexao", "Deu ruim, nao conseguiu achar arquivo com o hash correspondente.");
+                    }
 
                     File toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + hm.get("filename"));
 
