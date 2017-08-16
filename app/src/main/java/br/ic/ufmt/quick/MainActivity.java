@@ -2,6 +2,7 @@ package br.ic.ufmt.quick;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import model.FileTransfer;
 import rmi.ServerRMI;
 
 public class MainActivity extends AppCompatActivity {
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if(requestCode == 44 && resultCode == Activity.RESULT_OK){
+            data.setAction(Intent.ACTION_OPEN_DOCUMENT);
             if(data != null) {
                 Intent intent = new Intent(this, DownloadInfo.class);
                 intent.putExtra("path", data.getData());
@@ -118,6 +121,5 @@ public class MainActivity extends AppCompatActivity {
             );
         }
     }
-
 
 }

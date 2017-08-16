@@ -74,6 +74,8 @@ public class ServerRMI extends Service {
 
             Log.d("Conexao", "O ip do servidor: " + serverIP);
 
+//            ft.getFile("2jmj7l5rSw0yVb/vlWAYkK/YBwk=");
+
         } catch (LipeRMIException e) {
             e.printStackTrace();
         } catch (IOException e) {

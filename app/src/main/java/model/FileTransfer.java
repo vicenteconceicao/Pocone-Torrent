@@ -1,5 +1,7 @@
 package model;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.net.Uri;
 import android.util.Log;
@@ -10,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 
+import br.ic.ufmt.quick.MainActivity;
 import br.ic.ufmt.quick.PoconeTorrent;
 import database.SharedFileCRUD;
 
@@ -29,21 +32,29 @@ public class FileTransfer implements FileTransferInterface {
             Log.d("Conexao", "Nao achou Hash no SQLite");
             return hm;
         }
-        AssetFileDescriptor f = null;
-        try {
-            f = PoconeTorrent.getContext().getApplicationContext().getContentResolver().openAssetFileDescriptor(Uri.parse(sf.getFilename()), "r");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Log.d("Conexao", e.getMessage());
+//        AssetFileDescriptor f = null;
+//        try {
+//            f = PoconeTorrent.getContext().getContentResolver().openAssetFileDescriptor(Uri.parse(sf.getFilename()), "r");
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//            Log.d("Conexao", e.getMessage());
+//            return hm;
+//        }
+
+        File file = new File(sf.getFilename());
+        if (!file.exists()){
+            Log.d("Conexao", "Arquivo nao encontrado!");
             return hm;
         }
 
         try {
-            FileInputStream fis = f.createInputStream();
+//            FileInputStream fis = f.createInputStream();
+            FileInputStream fis = new FileInputStream(file);
             byte[] bytes = new byte[sf.getSize()];
             fis.read(bytes);
             fis.close();
-            hm.put("filename", sf.getFilename());
+            String[] s = sf.getFilename().split("/");
+            hm.put("filename", s[s.length-1]);
             hm.put("size", sf.getSize());
             hm.put("fileContent", bytes);
 

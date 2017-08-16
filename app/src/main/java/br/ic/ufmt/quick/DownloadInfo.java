@@ -109,11 +109,10 @@ public class DownloadInfo extends AppCompatActivity {
                         return;
                     }
 
-                    File toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + hm.get("filename"));
+                    File toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/poc_" + hm.get("filename"));
 
                     FileOutputStream fos = new FileOutputStream(toSave);
-                    byte[]  bytes = new byte[(Integer)hm.get("size")];
-
+                    byte[] bytes = (byte[]) hm.get("fileContent");
                     fos.write(bytes);
                     fos.close();
                     c.close();
@@ -128,6 +127,7 @@ public class DownloadInfo extends AppCompatActivity {
                     hmi = (HashManagerInterface) c.getGlobal(HashManagerInterface.class);
                     boolean r = hmi.shareFile(ptf.getHash(), new Peer(ServerRMI.serverIP, ServerRMI.serverPort));
                     c.close();
+                    Log.d("Conexao", "Enviou pro tracker.");
 
                 } catch (IOException e) {
                     Log.d("Conexao", e.getMessage());

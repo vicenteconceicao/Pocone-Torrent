@@ -61,8 +61,9 @@ public class CompartInfo extends AppCompatActivity {
         }
 
         final SharedFile sf = new SharedFile();
-        sf.setFilename(fileUri.toString());
+        sf.setFilename(PoconeTorrent.getPathFromUri(this, fileUri));
         Log.d("Conexao", "name: "+fileUri.toString());
+        Log.d("Conexao", "realPath: "+sf.getFilename());
         sf.setStatus(1);
         sf.setSize((int) afd.getLength());
         sf.setDate(new Date(new java.util.Date().getTime()));
