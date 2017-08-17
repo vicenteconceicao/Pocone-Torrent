@@ -15,8 +15,8 @@ public interface HashManagerInterface {
     
     public List<Peer> getPeers(String hash);
     
-    public boolean shareFile(String hash, Peer p);
+    public boolean shareFile(String hash);
     
-    public boolean unshareFile(String hash, Peer p);
+    public boolean unshareFile(String hash);
     
 }

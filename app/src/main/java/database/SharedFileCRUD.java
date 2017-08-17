@@ -136,6 +136,55 @@ public class SharedFileCRUD {
         return lsf;
     }
 
+    public List<SharedFile> findAllActive(){
+        db = helper.getWritableDatabase();
+        // Define a projection that specifies which columns from the database
+        // you will actually use after this query.
+        String[] projection = {
+                "hash",
+                "data",
+                "filename",
+                "size",
+                "status"
+        };
+
+        // Filter results WHERE "title" = 'My Title'
+        String selection = "status = ?";
+        String[] selectionArgs = { "1" };
+
+        // How you want the results sorted in the resulting Cursor
+        String sortOrder =
+                "filename ASC";
+
+        Cursor c = db.query(
+                "SharedFile",                     // The table to query
+                projection,                               // The columns to return
+                selection,                                // The columns for the WHERE clause
+                selectionArgs,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                sortOrder                                 // The sort order
+        );
+
+        List<SharedFile> lsf = new ArrayList<>();
+
+        if (!c.moveToFirst())
+            return lsf;
+
+        do {
+            SharedFile sf = new SharedFile();
+            sf.setHash(c.getString(0));
+            sf.setDate(Date.valueOf(c.getString(1)));
+            sf.setFilename(c.getString(2));
+            sf.setSize(c.getInt(3));
+            sf.setStatus(c.getInt(4));
+            lsf.add(sf);
+        } while (c.moveToNext());
+        c.close();
+        db.close();
+        return lsf;
+    }
+
     public boolean update(SharedFile sf){
         SQLiteDatabase db = helper.getReadableDatabase();
 

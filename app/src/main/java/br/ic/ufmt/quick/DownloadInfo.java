@@ -96,27 +96,37 @@ public class DownloadInfo extends AppCompatActivity {
                     Peer p = getRandomPeer(peers);
 
                     //baixar arquivo
-                    Log.d("Conexao", "Chegou aqui");
                     c = new Client(p.getIp(), p.getPort(), call);
-                    Log.d("Conexao", "Passou aqui2");
-                    FileTransferInterface fti = (FileTransferInterface) c.getGlobal(FileTransferInterface.class);
-                    HashMap<String, Object> hm = fti.getFile(ptf.getHash());
+                    Log.d("Conexao", "Passou aqui");
                     Log.d("Conexao", "Hash: "+ptf.getHash());
-                    Log.d("Conexao", "Passou aqui2");
+                    FileTransferInterface fti = (FileTransferInterface) c.getGlobal(FileTransferInterface.class);
 
-                    if (hm.isEmpty()){
-                        Log.d("Conexao", "Deu ruim, nao conseguiu achar arquivo com o hash correspondente.");
-                        return;
-                    }
-
-                    File toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/poc_" + hm.get("filename"));
-
+                    File toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/poc_" + "temp");
                     FileOutputStream fos = new FileOutputStream(toSave);
-                    byte[] bytes = (byte[]) hm.get("fileContent");
-                    fos.write(bytes);
+                    HashMap<String, Object> hm;
+                    int offset = 0;
+                    do {
+                        hm = fti.getFile(ptf.getHash(), offset);
+                        if (hm.isEmpty()){
+                            Log.d("Conexao", "Deu ruim, nao conseguiu achar arquivo com o hash correspondente.");
+                            return;
+                        }
+                        if (hm.get("last") != null) {
+                            Log.d("Conexao", "Terminou de receber.");
+                            break;
+                        }
+                        offset = (Integer) hm.get("offset");
+                        byte[] bytes = (byte[]) hm.get("bytes");
+                        fos.write(bytes, 0, (Integer)hm.get("length"));
+                        Log.d("Conexao", "Recebendo...");
+
+                    } while (hm.get("last") == null);
                     fos.close();
                     c.close();
+                    toSave.renameTo(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/poc_" + hm.get("filename")));
 
+
+                    toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/poc_" + hm.get("filename"));
                     SharedFileCRUD sfc = new SharedFileCRUD();
                     SharedFile sf = new SharedFile(ptf.getHash(), new Date(new java.util.Date().getTime()), toSave.getAbsolutePath(), (int)toSave.length(), 1);
                     sfc.insert(sf);
@@ -125,7 +135,7 @@ public class DownloadInfo extends AppCompatActivity {
                     //enviar para tracker
                     c = new Client(ptf.getTrackerAddress(), ptf.getTrackerPort(), call);
                     hmi = (HashManagerInterface) c.getGlobal(HashManagerInterface.class);
-                    boolean r = hmi.shareFile(ptf.getHash(), new Peer(ServerRMI.serverIP, ServerRMI.serverPort));
+                    boolean r = hmi.shareFile(ptf.getHash());
                     c.close();
                     Log.d("Conexao", "Enviou pro tracker.");
 

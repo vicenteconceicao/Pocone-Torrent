@@ -9,6 +9,6 @@ import java.util.HashMap;
 
 public interface FileTransferInterface {
 
-    public HashMap<String, Object> getFile(String hash);
+    public HashMap<String, Object> getFile(String hash, int offset);
 
 }

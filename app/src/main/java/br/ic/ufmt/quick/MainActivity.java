@@ -15,10 +15,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import net.sf.lipermi.handler.CallHandler;
+import net.sf.lipermi.net.Client;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
 
+import database.SharedFileCRUD;
 import model.FileTransfer;
+import model.HashManagerInterface;
+import model.Peer;
+import model.SharedFile;
+import model.Tracker;
 import rmi.ServerRMI;
 
 public class MainActivity extends AppCompatActivity {
@@ -63,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, ServerRMI.class);
         startService(intent);
+
+        enviarHashs();
     }
 
     @Override
@@ -82,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         Intent intent = new Intent(this, ServerRMI.class);
         stopService(intent);
+        removerHashs();
         super.onDestroy();
     }
 
@@ -120,6 +133,52 @@ public class MainActivity extends AppCompatActivity {
                     REQUEST_EXTERNAL_STORAGE
             );
         }
+    }
+
+    private void enviarHashs(){
+        SharedFileCRUD sfc = new SharedFileCRUD();
+        final List<SharedFile> lsf = sfc.findAllActive();
+
+        //enviar para tracker
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    CallHandler call = new CallHandler();
+                    Client c = new Client(Tracker.trackerAddress, Tracker.trackerPort, call);
+                    HashManagerInterface hmi = (HashManagerInterface) c.getGlobal(HashManagerInterface.class);
+                    for (SharedFile sf : lsf) {
+                        boolean r = hmi.shareFile(sf.getHash());
+                    }
+                    c.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    private void removerHashs(){
+        SharedFileCRUD sfc = new SharedFileCRUD();
+        final List<SharedFile> lsf = sfc.findAllActive();
+
+        //enviar para tracker
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    CallHandler call = new CallHandler();
+                    Client c = new Client(Tracker.trackerAddress, Tracker.trackerPort, call);
+                    HashManagerInterface hmi = (HashManagerInterface) c.getGlobal(HashManagerInterface.class);
+                    for (SharedFile sf : lsf) {
+                        boolean r = hmi.unshareFile(sf.getHash());
+                    }
+                    c.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
 }

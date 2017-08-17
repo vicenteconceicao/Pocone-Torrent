@@ -47,13 +47,15 @@ public class TorrentFileHelper {
         ptf.setTrackerPort(Tracker.trackerPort);
 
         try {
-            FileInputStream fis = sharedFile.createInputStream();
-            byte[] bytes = new byte[(int)sharedFile.getLength()];
-            fis.read(bytes);
-            fis.close();
-
             MessageDigest md = MessageDigest.getInstance("SHA-1");
-            String hash = Base64.encodeToString(md.digest(bytes), Base64.DEFAULT);
+            FileInputStream fis = sharedFile.createInputStream();
+            byte[] bytes = new byte[1048576];
+            int size;
+            while((size = fis.read(bytes)) != -1){
+                md.update(bytes, 0, size);
+            }
+            fis.close();
+            String hash = Base64.encodeToString(md.digest(), Base64.DEFAULT);
             ptf.setHash(hash);
             Log.d("Conexao", "Hash antes: "+ptf.getHash());
             File torrent = new File(ptf.getFilename());

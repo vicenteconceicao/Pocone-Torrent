@@ -89,11 +89,12 @@ public class CompartInfo extends AppCompatActivity {
                     CallHandler call = new CallHandler();
                     Client c = new Client(Tracker.trackerAddress, Tracker.trackerPort, call);
                     HashManagerInterface hmi = (HashManagerInterface) c.getGlobal(HashManagerInterface.class);
-                    boolean r = hmi.shareFile(sf.getHash(), new Peer(ServerRMI.serverIP, ServerRMI.serverPort));
+                    boolean r = hmi.shareFile(sf.getHash());
                     c.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                Log.d("Conexao", "Enviou hash para o tracker!");
             }
         }.start();
 
