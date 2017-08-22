@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.util.Log;
+import android.widget.Toast;
 
 import net.sf.lipermi.handler.CallHandler;
 import net.sf.lipermi.net.Client;
@@ -47,6 +48,14 @@ public class CompartInfo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 compartilhar(fileUri);
+            }
+        });
+
+        Button btn_cancel = (Button) findViewById(R.id.btn_cancelar_compart);
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }
@@ -97,7 +106,8 @@ public class CompartInfo extends AppCompatActivity {
                 Log.d("Conexao", "Enviou hash para o tracker!");
             }
         }.start();
-
         Log.d("Conexao", "Passouuuuu");
+        Toast toast = Toast.makeText(this, "Compartilhou", Toast.LENGTH_LONG);
+        toast.show();
     }
 }
