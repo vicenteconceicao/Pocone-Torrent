@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.text.format.Formatter;
 import android.util.Log;
+import android.widget.Toast;
 
 import net.sf.lipermi.exception.LipeRMIException;
 import net.sf.lipermi.handler.CallHandler;
@@ -16,13 +16,11 @@ import net.sf.lipermi.net.IServerListener;
 import net.sf.lipermi.net.Server;
 
 import java.io.IOException;
-import java.net.NetworkInterface;
 import java.net.Socket;
 
 import br.ic.ufmt.quick.PoconeTorrent;
 import model.FileTransfer;
 import model.FileTransferInterface;
-import model.HashManagerInterface;
 
 /**
  * Created by horgun on 09/08/17.
@@ -77,9 +75,9 @@ public class ServerRMI extends Service {
 //            ft.getFile("2jmj7l5rSw0yVb/vlWAYkK/YBwk=");
 
         } catch (LipeRMIException e) {
-            e.printStackTrace();
+            Toast.makeText(PoconeTorrent.getContext(),"Erro ao iniciar serviço: " + e.getMessage(), Toast.LENGTH_LONG).show();
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(PoconeTorrent.getContext(),"Erro ao iniciar serviço: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
     }

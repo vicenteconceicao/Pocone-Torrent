@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -16,7 +17,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 
 import br.ic.ufmt.quick.PoconeTorrent;
 
@@ -34,6 +34,7 @@ public class TorrentFileHelper {
             sharedFile = PoconeTorrent.getContext().getApplicationContext().getContentResolver().openAssetFileDescriptor(fileUri, "r");
         } catch (FileNotFoundException e) {
             Log.d("Conexao", "Arquivo não encontrado.");
+            Toast.makeText(PoconeTorrent.getContext(),"Arquivo não encontrado: " + e.getMessage(), Toast.LENGTH_LONG).show();
             return null;
         }
 
@@ -72,6 +73,7 @@ public class TorrentFileHelper {
 
         } catch (IOException | NoSuchAlgorithmException e) {
             Log.d("Conexao", e.getMessage());
+            Toast.makeText(PoconeTorrent.getContext(),"Erro: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
         return null;
     }
@@ -83,6 +85,7 @@ public class TorrentFileHelper {
             torrentFile = PoconeTorrent.getContext().getApplicationContext().getContentResolver().openAssetFileDescriptor(fileUri, "r");
         } catch (FileNotFoundException e) {
             Log.d("Conexao", "Arquivo .pocone não encontrado.");
+            Toast.makeText(PoconeTorrent.getContext(),"Arquivo .pocone não encontrado: " + e.getMessage(), Toast.LENGTH_LONG).show();
             return null;
         }
 
@@ -96,6 +99,7 @@ public class TorrentFileHelper {
             String[] lines = txt.split("\n");
             if (lines.length != 5){
                 Log.d("Conexao", "Arquivo torrent inválido!");
+                Toast.makeText(PoconeTorrent.getContext(),"Erro: Esse não é um arquivo .pocone válido!", Toast.LENGTH_LONG).show();
                 return null;
             }
             ptf.setTrackerAddress(lines[0]);
@@ -107,7 +111,8 @@ public class TorrentFileHelper {
 
             return ptf;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("Conexao", e.getMessage());
+            Toast.makeText(PoconeTorrent.getContext(),"Erro: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
         return null;
     }

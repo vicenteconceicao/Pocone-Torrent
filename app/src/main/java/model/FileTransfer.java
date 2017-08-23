@@ -1,24 +1,12 @@
 package model;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
-import android.net.Uri;
-import android.os.Environment;
 import android.util.Log;
-
-import net.sf.lipermi.net.Client;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.HashMap;
 
-import br.ic.ufmt.quick.MainActivity;
-import br.ic.ufmt.quick.PoconeTorrent;
 import database.SharedFileCRUD;
 
 /**
@@ -29,7 +17,7 @@ import database.SharedFileCRUD;
 public class FileTransfer implements FileTransferInterface {
 
     @Override
-    public HashMap<String, Object> getFile(String hash, int offset) {
+    public HashMap<String, Object> getFile(String hash, int offset) throws IOException {
         HashMap<String, Object> hm = new HashMap<>();
         SharedFileCRUD sfCRUD = new SharedFileCRUD();
         SharedFile sf = sfCRUD.find(hash);
@@ -44,7 +32,7 @@ public class FileTransfer implements FileTransferInterface {
             return hm;
         }
 
-        try {
+//        try {
             FileInputStream fis = new FileInputStream(file);
             byte[] bytes = new byte[524288];
             String[] s = sf.getFilename().split("/");
@@ -58,6 +46,7 @@ public class FileTransfer implements FileTransferInterface {
                     hm.put("offset", offset+size);
                     hm.put("length", size);
                     hm.put("bytes", bytes);
+                    hm.put("size",(int) file.length());
                     fis.close();
                     return hm;
                 }
@@ -81,10 +70,10 @@ public class FileTransfer implements FileTransferInterface {
 //            hm.put("last", 1);
 //            fis.close();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.d("Conexao", e.getMessage());
-        }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            Log.d("Conexao", e.getMessage());
+//        }
         return hm;
     }
 }

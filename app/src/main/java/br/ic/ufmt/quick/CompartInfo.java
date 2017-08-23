@@ -21,12 +21,9 @@ import java.sql.Date;
 
 import database.SharedFileCRUD;
 import model.HashManagerInterface;
-import model.Peer;
-import model.PoconeTorrentFile;
 import model.SharedFile;
 import model.TorrentFileHelper;
 import model.Tracker;
-import rmi.ServerRMI;
 
 public class CompartInfo extends AppCompatActivity {
 
@@ -66,6 +63,7 @@ public class CompartInfo extends AppCompatActivity {
             afd = getContentResolver().openAssetFileDescriptor(fileUri, "r");
         } catch (FileNotFoundException e) {
             Log.d("Conexao", "Arquivo não encontrado.");
+            Toast.makeText(this,"Não foi possível compartilhar o arquivo selecionado: " + e.getMessage(), Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -81,6 +79,7 @@ public class CompartInfo extends AppCompatActivity {
 
         if (f == null){
             Log.d("Conexao", "Nao deu pra escrever o .pocone");
+            Toast.makeText(this,"Não foi possível criar o arquivo .pocone!", Toast.LENGTH_LONG).show();
             return;
         }
         Log.d("Conexao", "chegouuuu");
@@ -100,10 +99,20 @@ public class CompartInfo extends AppCompatActivity {
                     HashManagerInterface hmi = (HashManagerInterface) c.getGlobal(HashManagerInterface.class);
                     boolean r = hmi.shareFile(sf.getHash());
                     c.close();
-                } catch (IOException e) {
+                    Log.d("Conexao", "Enviou hash para o tracker!");
+                    Toast.makeText(CompartInfo.this,"Arquivo compartilhado!", Toast.LENGTH_LONG).show();
+
+                } catch (final IOException e) {
                     e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(CompartInfo.this,"Problema ao comunicar com o tracker: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+
                 }
-                Log.d("Conexao", "Enviou hash para o tracker!");
+
             }
         }.start();
         Log.d("Conexao", "Passouuuuu");

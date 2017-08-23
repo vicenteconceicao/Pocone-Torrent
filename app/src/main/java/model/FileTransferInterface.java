@@ -1,5 +1,7 @@
 package model;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -9,6 +11,6 @@ import java.util.HashMap;
 
 public interface FileTransferInterface {
 
-    public HashMap<String, Object> getFile(String hash, int offset);
+    public HashMap<String, Object> getFile(String hash, int offset) throws IOException;
 
 }

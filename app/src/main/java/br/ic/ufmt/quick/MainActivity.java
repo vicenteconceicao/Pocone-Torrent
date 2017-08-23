@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.sf.lipermi.handler.CallHandler;
 import net.sf.lipermi.net.Client;
@@ -151,8 +152,15 @@ public class MainActivity extends AppCompatActivity {
                         boolean r = hmi.shareFile(sf.getHash());
                     }
                     c.close();
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this,"Não foi possível conectar ao tracker: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+
                 }
             }
         }.start();
@@ -176,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
                     c.close();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Toast.makeText(MainActivity.this,"Não foi possível conectar ao tracker: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         }.start();

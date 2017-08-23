@@ -25,6 +25,9 @@ public class SharedFileCRUD {
     }
 
     public boolean insert(SharedFile sf){
+        if (find(sf.getHash()) == null)
+            return false;
+
         db = helper.getWritableDatabase();
 
         // Create a new map of values, where column names are the keys
