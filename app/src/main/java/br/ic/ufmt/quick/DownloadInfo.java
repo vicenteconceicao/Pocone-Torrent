@@ -77,6 +77,8 @@ public class DownloadInfo extends AppCompatActivity {
         if(new SharedFileCRUD().find(ptf.getHash()) != null){
             finish();
             Toast.makeText(DownloadInfo.this, "Você já possui este arquivo", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(DownloadInfo.this, Baixando.class);
+            startActivity(intent);
             return;
         }
 
@@ -113,7 +115,8 @@ public class DownloadInfo extends AppCompatActivity {
                     Log.d("Conexao", "Hash: "+ptf.getHash());
                     FileTransferInterface fti = (FileTransferInterface) c.getGlobal(FileTransferInterface.class);
 
-                    File toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/poc_" + "temp");
+                    String tempName = "poc_temp_"+ptf.getHash();
+                    File toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() +"/"+tempName);
                     FileOutputStream fos = new FileOutputStream(toSave);
                     HashMap<String, Object> hm;
                     int offset = 0;
@@ -152,10 +155,10 @@ public class DownloadInfo extends AppCompatActivity {
                     } while (hm.get("last") == null);
                     fos.close();
                     c.close();
-                    toSave.renameTo(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/poc_" + hm.get("filename")));
+                    toSave.renameTo(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/" + hm.get("filename")));
 
 
-                    toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/poc_" + hm.get("filename"));
+                    toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/" + hm.get("filename"));
                     SharedFileCRUD sfc = new SharedFileCRUD();
                     SharedFile sf = new SharedFile(ptf.getHash(), new Date(new java.util.Date().getTime()), toSave.getAbsolutePath(), (int)toSave.length(), 1);
                     sfc.insert(sf);

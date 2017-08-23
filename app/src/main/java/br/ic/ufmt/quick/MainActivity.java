@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         List<SharedFile> files = new SharedFileCRUD().findAll();
 
         for(SharedFile f : files){
-            Log.d("Conexao", f.getFilename());
             if(!(new File(f.getFilename()).exists())){
                 new SharedFileCRUD().delete(f.getHash());
             }

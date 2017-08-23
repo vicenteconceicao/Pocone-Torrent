@@ -38,7 +38,12 @@ public class CompartInfo extends AppCompatActivity {
 
         final Uri fileUri = (Uri)intent.getParcelableExtra("path");
 
-        fileName.setText(fileUri.getPath());
+        fileName.setText(PoconeTorrent.getPathFromUri(this, fileUri));
+
+        TextView fileSize = (TextView) findViewById(R.id.fileSize);
+
+        //fileSize.setText();
+
 
         Button btn_compart = (Button) findViewById(R.id.btn_iniciar_compart);
         btn_compart.setOnClickListener(new View.OnClickListener() {

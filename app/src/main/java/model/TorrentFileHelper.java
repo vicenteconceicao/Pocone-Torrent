@@ -40,7 +40,7 @@ public class TorrentFileHelper {
 
         PoconeTorrentFile ptf = new PoconeTorrentFile();
 
-        String[] path = fileUri.getPath().split("/");
+        String[] path = PoconeTorrent.getPathFromUri(PoconeTorrent.getContext(),fileUri).split("/");
 
         ptf.setFilename(torrentsFolder + "/" + path[path.length-1] + ".pocone");
         ptf.setSize((int)sharedFile.getLength());
