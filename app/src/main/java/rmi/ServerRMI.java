@@ -75,9 +75,9 @@ public class ServerRMI extends Service {
 //            ft.getFile("2jmj7l5rSw0yVb/vlWAYkK/YBwk=");
 
         } catch (LipeRMIException e) {
-            Toast.makeText(PoconeTorrent.getContext(),"Erro ao iniciar serviço: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(PoconeTorrent.getContext(),"Erro ao iniciar serviço: " + e.getMessage(), Toast.LENGTH_LONG).show();
         } catch (IOException e) {
-            Toast.makeText(PoconeTorrent.getContext(),"Erro ao iniciar serviço: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(PoconeTorrent.getContext(),"Erro ao iniciar serviço: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
     }
