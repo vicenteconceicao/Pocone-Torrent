@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import br.ic.ufmt.quick.PoconeTorrent;
 import br.ic.ufmt.quick.R;
 
 /**
@@ -65,7 +67,7 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
     }
 
     public void onClickBtnBaixar(){
-
+        Toast.makeText(PoconeTorrent.getContext(), "Compartilhou", Toast.LENGTH_LONG).show();
     }
 
     public void onClickBtnApagar(){

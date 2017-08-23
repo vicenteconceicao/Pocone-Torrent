@@ -35,15 +35,6 @@ public class Baixando extends AppCompatActivity {
 
         ArrayList<SharedFile> files = (ArrayList<SharedFile>) dbHelper.findAll();
 
-        files.add(new SharedFile("019283129787382739127",new Date(new java.util.Date().getTime()), "Windows 10", 10,10));
-        files.add(new SharedFile("019283129787382739127",new Date(new java.util.Date().getTime()), "Windows 10", 10,10));
-        files.add(new SharedFile("019283129787382739127",new Date(new java.util.Date().getTime()), "Windows 10", 10,10));
-        files.add(new SharedFile("019283129787382739127",new Date(new java.util.Date().getTime()), "Windows 10", 10,10));
-        files.add(new SharedFile("019283129787382739127",new Date(new java.util.Date().getTime()), "Windows 10", 10,10));
-        files.add(new SharedFile("019283129787382739127",new Date(new java.util.Date().getTime()), "Windows 10", 10,10));
-        files.add(new SharedFile("019283129787382739127",new Date(new java.util.Date().getTime()), "Windows 10", 10,10));
-        files.add(new SharedFile("019283129787382739127",new Date(new java.util.Date().getTime()), "Windows 10", 10,10));
-
         SharedFileAdapter adapter = new SharedFileAdapter(this, files);
 
         ListView listView = (ListView) findViewById(R.id.list_pocone);
