@@ -79,6 +79,13 @@ public class TorrentFileHelper {
     }
 
     public static PoconeTorrentFile readPoconeTorrentFile(Uri fileUri){
+        //String[] str = PoconeTorrent.getPathFromUri(PoconeTorrent.getContext(), fileUri).split(".");
+        Log.d("TorrentFileHelper", PoconeTorrent.getPathFromUri(PoconeTorrent.getContext(), fileUri));
+        /*if(!str[str.length-1].equals("pocone")){
+            Log.d("TorrentFileHelper", "O arquivo deve ser do tipo .pocone");
+            Toast.makeText(PoconeTorrent.getContext(),"Erro:  O arquivo deve ser do tipo .pocone", Toast.LENGTH_LONG).show();
+            return null;
+        }*/
 
         AssetFileDescriptor torrentFile = null;
         try {

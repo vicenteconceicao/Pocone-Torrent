@@ -15,6 +15,8 @@ import android.widget.Toast;
 import net.sf.lipermi.handler.CallHandler;
 import net.sf.lipermi.net.Client;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -30,6 +32,7 @@ import model.Peer;
 import model.PoconeTorrentFile;
 import model.SharedFile;
 import model.TorrentFileHelper;
+import util.FileConverter;
 
 public class DownloadInfo extends AppCompatActivity {
 
@@ -45,6 +48,16 @@ public class DownloadInfo extends AppCompatActivity {
         final Uri fileUri = (Uri)intent.getParcelableExtra("path");
 
         fileName.setText(fileUri.getPath());
+
+
+        final PoconeTorrentFile ptf = TorrentFileHelper.readPoconeTorrentFile(fileUri);
+        if (ptf == null){
+            Log.d("Conexao", "Falha ao ler arquivo .pocone!");
+            return;
+        }
+
+        TextView fileSize = (TextView) findViewById(R.id.fileSizeDownload);
+        fileSize.setText(ptf.getSize());
 
         Button btnCancelar = (Button) findViewById(R.id.btn_cancelar_torrent);
 
@@ -70,7 +83,7 @@ public class DownloadInfo extends AppCompatActivity {
 
         final PoconeTorrentFile ptf = TorrentFileHelper.readPoconeTorrentFile(fileUri);
         if (ptf == null){
-            Log.d("Conexao", "Falha ao baixar arquivo!");
+            Log.d("Conexao", "Falha ao ler arquivo .pocone!");
             return;
         }
 

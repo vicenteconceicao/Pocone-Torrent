@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import br.ic.ufmt.quick.PoconeTorrent;
 import br.ic.ufmt.quick.R;
+import util.FileConverter;
 
 /**
  * Created by Vicente Conceicao on 10/08/2017.
@@ -39,13 +40,14 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
         TextView sharedFileSize = (TextView) convertView.findViewById(R.id.size);
         TextView sharedFileData = (TextView) convertView.findViewById(R.id.date);
 
+
         //Looup view for event population
         Button sharedFileButtonBaixar = (Button) convertView.findViewById(R.id.btnSharedBaixar);
         Button sharedFileButtonApagar = (Button) convertView.findViewById(R.id.btnSharedApagar);
 
         // Populate the data into the template view using the data object
         sharedFileName.setText(sharedFile.getFilename());
-        sharedFileSize.setText(sharedFile.getSize()+"");
+        sharedFileSize.setText(FileConverter.ConverterBytes((long)sharedFile.getSize()));
         sharedFileData.setText(sharedFile.getDate().toString());
 
         // Populate the event

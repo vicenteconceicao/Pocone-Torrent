@@ -24,6 +24,7 @@ import model.HashManagerInterface;
 import model.SharedFile;
 import model.TorrentFileHelper;
 import model.Tracker;
+import util.FileConverter;
 
 public class CompartInfo extends AppCompatActivity {
 
@@ -42,7 +43,7 @@ public class CompartInfo extends AppCompatActivity {
 
         TextView fileSize = (TextView) findViewById(R.id.fileSize);
 
-        //fileSize.setText();
+        fileSize.setText(FileConverter.ConverterBytes(new File(PoconeTorrent.getPathFromUri(this, fileUri)).length()));
 
 
         Button btn_compart = (Button) findViewById(R.id.btn_iniciar_compart);
