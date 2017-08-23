@@ -74,12 +74,17 @@ public class DownloadInfo extends AppCompatActivity {
             return;
         }
 
+        if(new SharedFileCRUD().find(ptf.getHash()) != null){
+            finish();
+            Toast.makeText(DownloadInfo.this, "Você já possui este arquivo", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         Log.d("Conexao", "PoconeTorretFile: " + ptf.getFilename());
 
         new Thread(){
             @Override
             public void run() {
-                Looper.prepare();
                 try {
                     //pegar peers com o tracker
                     CallHandler call = new CallHandler();
@@ -88,9 +93,15 @@ public class DownloadInfo extends AppCompatActivity {
                     List<Peer> peers = hmi.getPeers(ptf.getHash());
                     c.close();
 
-                    if (peers == null){//Colocar aviso para o usuário (dialog)
+                    if (peers == null || peers.isEmpty()){//Colocar aviso para o usuário (dialog)
                         Log.d("Conexao", "Nao existem peers com esse hash!");
-                        Toast.makeText(DownloadInfo.this,"Não foram encontrados peers para esse arquivo!", Toast.LENGTH_LONG).show();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(DownloadInfo.this,"Não foram encontrados peers para esse arquivo!", Toast.LENGTH_LONG).show();
+                            }
+                        });
+
                         return;
                     }
 
@@ -110,12 +121,26 @@ public class DownloadInfo extends AppCompatActivity {
                         hm = fti.getFile(ptf.getHash(), offset);
                         if (hm.isEmpty()){
                             Log.d("Conexao", "Deu ruim, nao conseguiu achar arquivo com o hash correspondente.");
-                            Toast.makeText(DownloadInfo.this,"Não foi possível encontrar o arquivo!", Toast.LENGTH_LONG).show();
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(DownloadInfo.this,"Não foi possível encontrar o arquivo!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
                             return;
                         }
                         if (hm.get("last") != null) {
                             Log.d("Conexao", "Terminou de receber.");
-                            Toast.makeText(DownloadInfo.this,"Arquivo recebido!", Toast.LENGTH_LONG).show();
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(DownloadInfo.this,"Arquivo recebido!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
                             break;
                         }
                         offset = (Integer) hm.get("offset");
@@ -142,6 +167,16 @@ public class DownloadInfo extends AppCompatActivity {
                     boolean r = hmi.shareFile(ptf.getHash());
                     c.close();
                     Log.d("Conexao", "Enviou pro tracker.");
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(DownloadInfo.this, "Baixando", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    finish();
+                    Intent intent = new Intent(DownloadInfo.this, Baixando.class);
+                    startActivity(intent);
 
                 } catch (IOException e) {
                     final IOException err = e;

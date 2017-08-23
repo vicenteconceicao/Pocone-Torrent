@@ -75,7 +75,21 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ServerRMI.class);
         startService(intent);
 
+        verificaArquivos();
         enviarHashs();
+
+    }
+
+    private void verificaArquivos() {
+
+        List<SharedFile> files = new SharedFileCRUD().findAll();
+
+        for(SharedFile f : files){
+            Log.d("Conexao", f.getFilename());
+            if(!(new File(f.getFilename()).exists())){
+                new SharedFileCRUD().delete(f.getHash());
+            }
+        }
     }
 
     @Override
@@ -100,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickChooseFile(){
+        verificaArquivos();
+        enviarHashs();
         Intent intent = new Intent();
         intent.setType("*/*");
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);

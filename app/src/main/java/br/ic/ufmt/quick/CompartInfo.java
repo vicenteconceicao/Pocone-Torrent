@@ -100,7 +100,6 @@ public class CompartInfo extends AppCompatActivity {
                     boolean r = hmi.shareFile(sf.getHash());
                     c.close();
                     Log.d("Conexao", "Enviou hash para o tracker!");
-                    Toast.makeText(CompartInfo.this,"Arquivo compartilhado!", Toast.LENGTH_LONG).show();
 
                 } catch (final IOException e) {
                     e.printStackTrace();
@@ -118,5 +117,8 @@ public class CompartInfo extends AppCompatActivity {
         Log.d("Conexao", "Passouuuuu");
         Toast toast = Toast.makeText(this, "Compartilhou", Toast.LENGTH_LONG);
         toast.show();
+        finish();
+        Intent intent = new Intent(this,Baixando.class);
+        startActivity(intent);
     }
 }

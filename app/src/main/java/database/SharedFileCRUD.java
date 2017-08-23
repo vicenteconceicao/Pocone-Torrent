@@ -25,7 +25,7 @@ public class SharedFileCRUD {
     }
 
     public boolean insert(SharedFile sf){
-        if (find(sf.getHash()) == null)
+        if (find(sf.getHash()) != null)
             return false;
 
         db = helper.getWritableDatabase();
