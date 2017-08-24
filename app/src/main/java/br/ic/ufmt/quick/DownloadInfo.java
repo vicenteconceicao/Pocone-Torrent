@@ -56,8 +56,10 @@ public class DownloadInfo extends AppCompatActivity {
             return;
         }
 
-        TextView fileSize = (TextView) findViewById(R.id.fileSizeDownload);
-        fileSize.setText(ptf.getSize());
+
+        TextView fileSize = (TextView) findViewById(R.id.sizeDownload);
+
+        fileSize.setText(FileConverter.ConverterBytes((long)ptf.getSize()));
 
         Button btnCancelar = (Button) findViewById(R.id.btn_cancelar_torrent);
 
