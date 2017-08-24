@@ -12,6 +12,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import database.SharedFileCRUD;
 import model.SharedFile;
@@ -35,7 +37,21 @@ public class Baixando extends AppCompatActivity {
 
         ArrayList<SharedFile> files = (ArrayList<SharedFile>) dbHelper.findAll();
 
-        SharedFileAdapter adapter = new SharedFileAdapter(this, files);
+        final SharedFileAdapter adapter = new SharedFileAdapter(this, files);
+
+        Timer t = new Timer();
+
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }, 0, 1000);
 
         ListView listView = (ListView) findViewById(R.id.list_pocone);
 

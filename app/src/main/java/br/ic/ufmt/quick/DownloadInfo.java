@@ -132,6 +132,18 @@ public class DownloadInfo extends AppCompatActivity {
 
                     String tempName = "poc_temp_"+ptf.getHash();
                     File toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() +"/"+tempName);
+
+                    //Inerindo temp no SQLite
+                    SharedFileCRUD sfc = new SharedFileCRUD();
+                    SharedFile sf = new SharedFile(ptf.getHash(), new Date(new java.util.Date().getTime()), toSave.getAbsolutePath(), ptf.getSize(), 1);
+                    sfc.insert(sf);
+
+                    finish();
+                    Intent intent = new Intent(DownloadInfo.this, Baixando.class);
+                    startActivity(intent);
+
+
+
                     FileOutputStream fos = new FileOutputStream(toSave);
                     HashMap<String, Object> hm;
                     int offset = 0;
@@ -174,9 +186,9 @@ public class DownloadInfo extends AppCompatActivity {
 
 
                     toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/" + hm.get("filename"));
-                    SharedFileCRUD sfc = new SharedFileCRUD();
-                    SharedFile sf = new SharedFile(ptf.getHash(), new Date(new java.util.Date().getTime()), toSave.getAbsolutePath(), (int)toSave.length(), 1);
-                    sfc.insert(sf);
+                    sf.setFilename(toSave.getAbsolutePath());
+
+                    sfc.update(sf);
                     Log.d("Conexao", "Inseriu no sqlite");
 
                     //enviar para tracker
@@ -192,9 +204,7 @@ public class DownloadInfo extends AppCompatActivity {
                             Toast.makeText(DownloadInfo.this, "Baixando", Toast.LENGTH_LONG).show();
                         }
                     });
-                    finish();
-                    Intent intent = new Intent(DownloadInfo.this, Baixando.class);
-                    startActivity(intent);
+
 
                 } catch (IOException e) {
                     final IOException err = e;

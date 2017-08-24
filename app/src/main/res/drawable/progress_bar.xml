@@ -6,9 +6,8 @@
         <clip>
 
             <shape>
-                <solid android:color="@color/colorDanger"/>
+                <solid android:color="@color/webHostBandBrown"/>
             </shape>
-
         </clip>
         <solid android:color="@color/colorSecudary"/>
     </item>

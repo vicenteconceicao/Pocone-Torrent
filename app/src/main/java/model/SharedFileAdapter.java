@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import br.ic.ufmt.quick.PoconeTorrent;
@@ -45,6 +46,7 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
         // Lookup view for data population
         TextView sharedFileName = (TextView) convertView.findViewById(R.id.filename);
         TextView sharedFileSize = (TextView) convertView.findViewById(R.id.size);
+        TextView sharedFileSizeDownload = (TextView) convertView.findViewById(R.id.sizeDownloaded);
         TextView sharedFileData = (TextView) convertView.findViewById(R.id.date);
 
         //Looup view for event population
@@ -53,7 +55,9 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
 
         // Populate the data into the progressbar
         progressBar.setMax(sharedFile.getSize());
-        progressBar.setProgress(sharedFile.getSize()-1000,true);
+
+        //Verificar se é temp para abrir uma thread
+        progressBar.setProgress((int) new File(sharedFile.getFilename()).length());
 
         // Populate the data into the template view using the data object
         sharedFileName.setText(sharedFile.getFilename());
