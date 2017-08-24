@@ -1,12 +1,15 @@
 package model;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +28,7 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
         super(context, 0, sharedFiles);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
 
@@ -35,15 +39,21 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_shared_file, parent, false);
         }
 
+        // Looup progress bar for data population
+        ProgressBar progressBar = (ProgressBar) convertView.findViewById(R.id.progressBar);
+
         // Lookup view for data population
         TextView sharedFileName = (TextView) convertView.findViewById(R.id.filename);
         TextView sharedFileSize = (TextView) convertView.findViewById(R.id.size);
         TextView sharedFileData = (TextView) convertView.findViewById(R.id.date);
 
-
         //Looup view for event population
         Button sharedFileButtonBaixar = (Button) convertView.findViewById(R.id.btnSharedBaixar);
         Button sharedFileButtonApagar = (Button) convertView.findViewById(R.id.btnSharedApagar);
+
+        // Populate the data into the progressbar
+        progressBar.setMax(sharedFile.getSize());
+        progressBar.setProgress(sharedFile.getSize()-1000,true);
 
         // Populate the data into the template view using the data object
         sharedFileName.setText(sharedFile.getFilename());
