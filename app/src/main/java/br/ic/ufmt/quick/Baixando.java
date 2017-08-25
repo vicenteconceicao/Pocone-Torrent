@@ -40,8 +40,7 @@ public class Baixando extends AppCompatActivity {
         final SharedFileAdapter adapter = new SharedFileAdapter(this, files);
 
         Timer t = new Timer();
-
-        t.scheduleAtFixedRate(new TimerTask() {
+        t.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run() {
                 runOnUiThread(new Runnable() {
@@ -51,7 +50,7 @@ public class Baixando extends AppCompatActivity {
                     }
                 });
             }
-        }, 0, 1000);
+        },0, 500);
 
         ListView listView = (ListView) findViewById(R.id.list_pocone);
 

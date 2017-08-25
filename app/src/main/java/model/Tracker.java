@@ -5,6 +5,6 @@ package model;
  */
 
 public class Tracker {
-    public static String trackerAddress = "192.168.137.100";
+    public static String trackerAddress = "192.168.2.104";
     public static int trackerPort = 5000;
 }
