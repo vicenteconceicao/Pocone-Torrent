@@ -48,6 +48,11 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
 
         //Get the data item for this position
         final SharedFile sharedFile = getItem(position);
+        if (sharedFile.getFilename().contains("poc_temp") && (int) new File(sharedFile.getFilename()).length() == 0){
+            SharedFile ns = new SharedFileCRUD().find(sharedFile.getHash());
+            sharedFile.setFilename(ns.getFilename());
+            sharedFile.setStatus(ns.getStatus());
+        }
 
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_shared_file, parent, false);
@@ -122,6 +127,7 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
                             boolean r = hmi.unshareFile(sharedFile.getHash());
                             c.close();
                             new SharedFileCRUD().delete(sharedFile.getHash());
+                            notifyDataSetChanged();
                         } catch (final IOException e) {
                             e.printStackTrace();
 
@@ -135,7 +141,6 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
                     }
                 }.start();
 
-                notifyDataSetChanged();
             }
         });
 
