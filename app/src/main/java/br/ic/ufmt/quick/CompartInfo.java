@@ -81,6 +81,8 @@ public class CompartInfo extends AppCompatActivity {
         sf.setSize((int) afd.getLength());
         sf.setDate(new Date(new java.util.Date().getTime()));
 
+        Toast.makeText(this, "Compartilhando arquivo. Aguarde!", Toast.LENGTH_SHORT).show();
+
         File f = TorrentFileHelper.writePoconeTorrentFile(fileUri);
 
         if (f == null){
@@ -90,7 +92,6 @@ public class CompartInfo extends AppCompatActivity {
         }
         Log.d("Conexao", "chegouuuu");
 
-        Toast.makeText(this, "Compartilhando arquivo. Aguarde!", Toast.LENGTH_SHORT).show();
         sf.setHash(TorrentFileHelper.readPoconeTorrentFile(Uri.fromFile(f)).getHash());
 
         SharedFileCRUD sfc = new SharedFileCRUD();

@@ -197,14 +197,6 @@ public class DownloadInfo extends AppCompatActivity {
                     c.close();
                     Log.d("Conexao", "Enviou pro tracker.");
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(DownloadInfo.this, "Baixando", Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-
                 } catch (IOException e) {
                     final IOException err = e;
                     Log.d("Conexao", e.getMessage());
