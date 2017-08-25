@@ -89,7 +89,7 @@ public class DownloadInfo extends AppCompatActivity {
             return;
         }
 
-        if(new SharedFileCRUD().find(ptf.getHash()) != null){
+        if(SharedFileCRUD.find(ptf.getHash()) != null){
             finish();
             Toast.makeText(DownloadInfo.this, "Você já possui este arquivo", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(DownloadInfo.this, Baixando.class);
@@ -134,9 +134,8 @@ public class DownloadInfo extends AppCompatActivity {
                     File toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() +"/"+tempName);
 
                     //Inserindo temp no SQLite
-                    SharedFileCRUD sfc = new SharedFileCRUD();
                     SharedFile sf = new SharedFile(ptf.getHash(), new Date(new java.util.Date().getTime()), toSave.getAbsolutePath(), ptf.getSize(), 1);
-                    sfc.insert(sf);
+                    SharedFileCRUD.insert(sf);
 
                     finish();
                     Intent intent = new Intent(DownloadInfo.this, Baixando.class);
@@ -147,6 +146,19 @@ public class DownloadInfo extends AppCompatActivity {
                     HashMap<String, Object> hm;
                     int offset = 0;
                     do {
+                        if (SharedFileCRUD.find(sf.getHash()).getStatus() == -1){
+                            Log.d("DownloadInfo", "Download interrompido.");
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(DownloadInfo.this,"Download interrompido.", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                            fos.close();
+                            c.close();
+                            return;
+                        }
                         hm = fti.getFile(ptf.getHash(), offset);
                         if (hm.isEmpty()){
                             Log.d("Conexao", "Deu ruim, nao conseguiu achar arquivo com o hash correspondente.");
@@ -157,7 +169,8 @@ public class DownloadInfo extends AppCompatActivity {
                                     Toast.makeText(DownloadInfo.this,"Não foi possível encontrar o arquivo!", Toast.LENGTH_LONG).show();
                                 }
                             });
-
+                            fos.close();
+                            c.close();
                             return;
                         }
                         if (hm.get("last") != null) {
@@ -169,7 +182,8 @@ public class DownloadInfo extends AppCompatActivity {
                                     Toast.makeText(DownloadInfo.this,"Arquivo "+ptf.getFilename()+ " recebido!", Toast.LENGTH_LONG).show();
                                 }
                             });
-
+                            fos.close();
+                            c.close();
                             break;
                         }
                         offset = (Integer) hm.get("offset");
@@ -187,7 +201,7 @@ public class DownloadInfo extends AppCompatActivity {
                     toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/" + hm.get("filename"));
                     sf.setFilename(toSave.getAbsolutePath());
                     sf.setStatus(0);
-                    sfc.update(sf);
+                    SharedFileCRUD.update(sf);
                     Log.d("Conexao", "Inseriu no sqlite");
 
                     //enviar para tracker

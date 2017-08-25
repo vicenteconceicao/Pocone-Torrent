@@ -33,11 +33,11 @@ public class Baixando extends AppCompatActivity {
 
     public void populateSharedFileList(){
 
-        SharedFileCRUD dbHelper = new SharedFileCRUD();
-
-        ArrayList<SharedFile> files = (ArrayList<SharedFile>) dbHelper.findAll();
-
-        final SharedFileAdapter adapter = new SharedFileAdapter(this, files);
+//        final SharedFileCRUD dbHelper = new SharedFileCRUD();
+//
+//        final ArrayList<SharedFile> files = (ArrayList<SharedFile>) dbHelper.findAll();
+//
+//        final SharedFileAdapter adapter = new SharedFileAdapter(this, files);
 
         Timer t = new Timer();
         t.scheduleAtFixedRate(new TimerTask(){
@@ -46,14 +46,14 @@ public class Baixando extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        adapter.notifyDataSetChanged();
+                        SharedFileAdapter adapter = new SharedFileAdapter(Baixando.this, (ArrayList<SharedFile>) SharedFileCRUD.findAll());
+                        ListView listView = (ListView) findViewById(R.id.list_pocone);
+                        listView.setAdapter(adapter);
                     }
                 });
             }
         },0, 2000);
 
-        ListView listView = (ListView) findViewById(R.id.list_pocone);
 
-        listView.setAdapter(adapter);
     }
 }

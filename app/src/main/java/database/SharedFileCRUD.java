@@ -17,17 +17,17 @@ import model.SharedFile;
  */
 
 public class SharedFileCRUD {
-    private PoconeTorrentDbHelper helper;
-    private SQLiteDatabase db;
+    private static PoconeTorrentDbHelper helper;
+    private static SQLiteDatabase db;
 
     public SharedFileCRUD() {
-        this.helper = new PoconeTorrentDbHelper(PoconeTorrent.getContext());
+
     }
 
-    public boolean insert(SharedFile sf){
+    public static boolean insert(SharedFile sf){
         if (find(sf.getHash()) != null)
             return false;
-
+        helper = new PoconeTorrentDbHelper(PoconeTorrent.getContext());
         db = helper.getWritableDatabase();
 
         // Create a new map of values, where column names are the keys
@@ -41,10 +41,12 @@ public class SharedFileCRUD {
         // Insert the new row, returning the primary key value of the new row
         long r = db.insert("SharedFile", null, values);
         db.close();
+        helper.close();
         return r != -1;
     }
 
-    public boolean delete(String hash){
+    public static boolean delete(String hash){
+        helper = new PoconeTorrentDbHelper(PoconeTorrent.getContext());
         db = helper.getReadableDatabase();
         // Define 'where' part of query.
         String selection = "hash LIKE ?";
@@ -53,10 +55,12 @@ public class SharedFileCRUD {
         // Issue SQL statement.
         int r = db.delete("SharedFile", selection, selectionArgs);
         db.close();
+        helper.close();
         return r != 0;
     }
 
-    public SharedFile find(String hash){
+    public static SharedFile find(String hash){
+        helper = new PoconeTorrentDbHelper(PoconeTorrent.getContext());
         db = helper.getWritableDatabase();
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
@@ -92,10 +96,12 @@ public class SharedFileCRUD {
         sf.setStatus(c.getInt(4));
         c.close();
         db.close();
+        helper.close();
         return sf;
     }
 
-    public List<SharedFile> findAll(){
+    public static List<SharedFile> findAll(){
+        helper = new PoconeTorrentDbHelper(PoconeTorrent.getContext());
         db = helper.getWritableDatabase();
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
@@ -136,10 +142,12 @@ public class SharedFileCRUD {
         } while (c.moveToNext());
         c.close();
         db.close();
+        helper.close();
         return lsf;
     }
 
-    public List<SharedFile> findAllStatus(int status){
+    public static List<SharedFile> findAllStatus(int status){
+        helper = new PoconeTorrentDbHelper(PoconeTorrent.getContext());
         db = helper.getWritableDatabase();
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
@@ -185,11 +193,13 @@ public class SharedFileCRUD {
         } while (c.moveToNext());
         c.close();
         db.close();
+        helper.close();
         return lsf;
     }
 
-    public boolean update(SharedFile sf){
-        SQLiteDatabase db = helper.getReadableDatabase();
+    public static boolean update(SharedFile sf){
+        helper = new PoconeTorrentDbHelper(PoconeTorrent.getContext());
+        db = helper.getReadableDatabase();
 
         // New value for one column
         ContentValues values = new ContentValues();
@@ -209,6 +219,7 @@ public class SharedFileCRUD {
                 selection,
                 selectionArgs);
         db.close();
+        helper.close();
         return count != 0;
     }
 

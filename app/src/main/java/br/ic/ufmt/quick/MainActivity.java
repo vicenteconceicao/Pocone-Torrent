@@ -82,11 +82,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void verificaArquivos() {
 
-        List<SharedFile> files = new SharedFileCRUD().findAll();
+        List<SharedFile> files = SharedFileCRUD.findAll();
 
         for(SharedFile f : files){
             if(!(new File(f.getFilename()).exists())){
-                new SharedFileCRUD().delete(f.getHash());
+                SharedFileCRUD.delete(f.getHash());
             }
         }
     }
@@ -152,8 +152,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void enviarHashs(){
-        SharedFileCRUD sfc = new SharedFileCRUD();
-        final List<SharedFile> lsf = sfc.findAllStatus(0);
+        final List<SharedFile> lsf = SharedFileCRUD.findAllStatus(0);
 
         //enviar para tracker
         new Thread(){
@@ -182,8 +181,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void removerHashs(){
-        SharedFileCRUD sfc = new SharedFileCRUD();
-        final List<SharedFile> lsf = sfc.findAllStatus(0);
+        final List<SharedFile> lsf = SharedFileCRUD.findAllStatus(0);
 
         //remover do tracker
         new Thread(){

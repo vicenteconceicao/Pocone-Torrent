@@ -56,7 +56,7 @@ public class TorrentFileHelper {
                 md.update(bytes, 0, size);
             }
             fis.close();
-            String hash = Base64.encodeToString(md.digest(), Base64.DEFAULT);
+            String hash = Base64.encodeToString(md.digest(), Base64.URL_SAFE);
             ptf.setHash(hash);
             Log.d("Conexao", "Hash antes: "+ptf.getHash());
             File torrent = new File(ptf.getFilename());

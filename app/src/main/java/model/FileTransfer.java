@@ -19,8 +19,7 @@ public class FileTransfer implements FileTransferInterface {
     @Override
     public HashMap<String, Object> getFile(String hash, int offset) throws IOException {
         HashMap<String, Object> hm = new HashMap<>();
-        SharedFileCRUD sfCRUD = new SharedFileCRUD();
-        SharedFile sf = sfCRUD.find(hash);
+        SharedFile sf = SharedFileCRUD.find(hash);
         if (sf == null) {
             Log.d("Conexao", "Nao achou Hash no SQLite");
             return hm;
