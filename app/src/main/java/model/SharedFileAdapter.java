@@ -287,13 +287,6 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
                     c.close();
                     Log.d("Conexao", "Enviou pro tracker.");
 
-                    h.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getContext(), "Baixando", Toast.LENGTH_LONG).show();
-                        }
-                    });
-
 
                 } catch (IOException e) {
                     final IOException err = e;
