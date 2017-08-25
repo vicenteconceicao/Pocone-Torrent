@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void enviarHashs(){
         SharedFileCRUD sfc = new SharedFileCRUD();
-        final List<SharedFile> lsf = sfc.findAllActive();
+        final List<SharedFile> lsf = sfc.findAllStatus(0);
 
         //enviar para tracker
         new Thread(){
@@ -183,9 +183,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void removerHashs(){
         SharedFileCRUD sfc = new SharedFileCRUD();
-        final List<SharedFile> lsf = sfc.findAllActive();
+        final List<SharedFile> lsf = sfc.findAllStatus(0);
 
-        //enviar para tracker
+        //remover do tracker
         new Thread(){
             @Override
             public void run() {

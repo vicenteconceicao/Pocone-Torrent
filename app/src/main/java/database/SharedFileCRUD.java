@@ -139,7 +139,7 @@ public class SharedFileCRUD {
         return lsf;
     }
 
-    public List<SharedFile> findAllActive(){
+    public List<SharedFile> findAllStatus(int status){
         db = helper.getWritableDatabase();
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
@@ -153,7 +153,7 @@ public class SharedFileCRUD {
 
         // Filter results WHERE "title" = 'My Title'
         String selection = "status = ?";
-        String[] selectionArgs = { "1" };
+        String[] selectionArgs = { "" + status };
 
         // How you want the results sorted in the resulting Cursor
         String sortOrder =

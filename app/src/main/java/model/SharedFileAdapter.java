@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
@@ -16,7 +18,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.sf.lipermi.handler.CallHandler;
+import net.sf.lipermi.net.Client;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import br.ic.ufmt.quick.PoconeTorrent;
@@ -30,12 +36,10 @@ import util.FileConverter;
 
 public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
 
-    SharedFile sharedFile;
-
-
 
     public SharedFileAdapter(@NonNull Context context, ArrayList<SharedFile> sharedFiles) {
         super(context, 0, sharedFiles);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -43,7 +47,7 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
     public View getView(int position, View convertView, ViewGroup parent){
 
         //Get the data item for this position
-        sharedFile = getItem(position);
+        final SharedFile sharedFile = getItem(position);
 
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_shared_file, parent, false);
@@ -88,39 +92,54 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
         sharedFileButtonBaixar.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickBtnBaixar();
+                if(sharedFile.getStatus() == 1){
+                    sharedFile.setStatus(-1);
+                    new SharedFileCRUD().update(sharedFile);
+                }else if(sharedFile.getStatus() == -1){
+                    sharedFile.setStatus(1);
+                    new SharedFileCRUD().update(sharedFile);
+
+                }
+                notifyDataSetChanged();
             }
         });
         sharedFileButtonApagar.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickBtnApagar();
+
+                //remover do tracker
+                new Thread(){
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        Handler h = new Handler();
+                        Looper.loop();
+                        try {
+                            CallHandler call = new CallHandler();
+                            Client c = new Client(Tracker.trackerAddress, Tracker.trackerPort, call);
+                            HashManagerInterface hmi = (HashManagerInterface) c.getGlobal(HashManagerInterface.class);
+                            boolean r = hmi.unshareFile(sharedFile.getHash());
+                            c.close();
+                            new SharedFileCRUD().delete(sharedFile.getHash());
+                        } catch (final IOException e) {
+                            e.printStackTrace();
+
+                            h.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getContext(),"Não foi possível conectar ao tracker: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    }
+                }.start();
+
+                notifyDataSetChanged();
             }
         });
 
         //return the completed view to render on screen
         return convertView;
-    }
-
-    public void onClickBtnBaixar(){
-        /*if(sharedFile.getStatus() == 1){
-            sharedFileButtonBaixar.setBackgroundResource(R.color.colorYellow);
-            sharedFileButtonBaixar.setText("Continuar");
-            sharedFileButtonBaixar.setTextColor(Color.BLACK);
-            sharedFile.setStatus(-1);
-            notifyDataSetChanged();
-        }else if(sharedFile.getStatus() == -1){
-            sharedFileButtonBaixar.setBackgroundResource(R.color.colorPrimary);
-            sharedFileButtonBaixar.setText("Pausar");
-            sharedFile.setStatus(1);
-        }
-
-        new SharedFileCRUD().update(sharedFile);
-        */
-    }
-
-    public void onClickBtnApagar(){
-
     }
 
 }

@@ -50,7 +50,7 @@ public class Baixando extends AppCompatActivity {
                     }
                 });
             }
-        },0, 500);
+        },0, 1000);
 
         ListView listView = (ListView) findViewById(R.id.list_pocone);
 

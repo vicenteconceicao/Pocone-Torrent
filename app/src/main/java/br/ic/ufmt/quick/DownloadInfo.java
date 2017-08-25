@@ -187,7 +187,7 @@ public class DownloadInfo extends AppCompatActivity {
 
                     toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/" + hm.get("filename"));
                     sf.setFilename(toSave.getAbsolutePath());
-
+                    sf.setStatus(0);
                     sfc.update(sf);
                     Log.d("Conexao", "Inseriu no sqlite");
 
