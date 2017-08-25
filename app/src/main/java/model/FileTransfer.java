@@ -34,7 +34,7 @@ public class FileTransfer implements FileTransferInterface {
 
 //        try {
             FileInputStream fis = new FileInputStream(file);
-            byte[] bytes = new byte[524288];
+            byte[] bytes = new byte[1048576];
             String[] s = sf.getFilename().split("/");
             String filename = s[s.length-1];
             int size;

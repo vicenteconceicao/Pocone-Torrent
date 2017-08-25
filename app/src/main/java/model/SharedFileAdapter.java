@@ -35,10 +35,11 @@ import util.FileConverter;
  */
 
 public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
-
+    ArrayList<SharedFile> sfs;
 
     public SharedFileAdapter(@NonNull Context context, ArrayList<SharedFile> sharedFiles) {
         super(context, 0, sharedFiles);
+        sfs = sharedFiles;
 
     }
 
@@ -50,8 +51,10 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
         final SharedFile sharedFile = getItem(position);
         if (sharedFile.getFilename().contains("poc_temp") && (int) new File(sharedFile.getFilename()).length() == 0){
             SharedFile ns = new SharedFileCRUD().find(sharedFile.getHash());
-            sharedFile.setFilename(ns.getFilename());
-            sharedFile.setStatus(ns.getStatus());
+            if (ns != null) {
+                sharedFile.setFilename(ns.getFilename());
+                sharedFile.setStatus(ns.getStatus());
+            }
         }
 
         if(convertView == null){
@@ -119,7 +122,6 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
                     public void run() {
                         Looper.prepare();
                         Handler h = new Handler();
-                        Looper.loop();
                         try {
                             CallHandler call = new CallHandler();
                             Client c = new Client(Tracker.trackerAddress, Tracker.trackerPort, call);
@@ -127,7 +129,13 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
                             boolean r = hmi.unshareFile(sharedFile.getHash());
                             c.close();
                             new SharedFileCRUD().delete(sharedFile.getHash());
-                            notifyDataSetChanged();
+                            sfs.remove(sharedFile);
+                            h.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getContext(),"Apagando...", Toast.LENGTH_LONG).show();
+                                }
+                            });
                         } catch (final IOException e) {
                             e.printStackTrace();
 
@@ -138,6 +146,8 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
                                 }
                             });
                         }
+                        interrupt();
+                        Looper.loop();
                     }
                 }.start();
 

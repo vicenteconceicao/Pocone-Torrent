@@ -133,7 +133,7 @@ public class DownloadInfo extends AppCompatActivity {
                     String tempName = "poc_temp_"+ptf.getHash();
                     File toSave = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() +"/"+tempName);
 
-                    //Inerindo temp no SQLite
+                    //Inserindo temp no SQLite
                     SharedFileCRUD sfc = new SharedFileCRUD();
                     SharedFile sf = new SharedFile(ptf.getHash(), new Date(new java.util.Date().getTime()), toSave.getAbsolutePath(), ptf.getSize(), 1);
                     sfc.insert(sf);
@@ -142,9 +142,8 @@ public class DownloadInfo extends AppCompatActivity {
                     Intent intent = new Intent(DownloadInfo.this, Baixando.class);
                     startActivity(intent);
 
-
-
                     FileOutputStream fos = new FileOutputStream(toSave);
+                    Log.d("DownloadInfo", "Chegou aqui");
                     HashMap<String, Object> hm;
                     int offset = 0;
                     do {
