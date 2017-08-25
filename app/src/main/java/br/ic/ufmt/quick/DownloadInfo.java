@@ -166,7 +166,7 @@ public class DownloadInfo extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(DownloadInfo.this,"Arquivo recebido!", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(DownloadInfo.this,"Arquivo "+ptf.getFilename()+ " recebido!", Toast.LENGTH_LONG).show();
                                 }
                             });
 

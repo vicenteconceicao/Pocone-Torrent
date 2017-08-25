@@ -90,6 +90,7 @@ public class CompartInfo extends AppCompatActivity {
         }
         Log.d("Conexao", "chegouuuu");
 
+        Toast.makeText(this, "Compartilhando arquivo. Aguarde!", Toast.LENGTH_SHORT).show();
         sf.setHash(TorrentFileHelper.readPoconeTorrentFile(Uri.fromFile(f)).getHash());
 
         SharedFileCRUD sfc = new SharedFileCRUD();
