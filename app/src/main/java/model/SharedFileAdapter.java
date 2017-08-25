@@ -1,9 +1,12 @@
 package model;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 
 import br.ic.ufmt.quick.PoconeTorrent;
 import br.ic.ufmt.quick.R;
+import database.SharedFileCRUD;
 import util.FileConverter;
 
 /**
@@ -25,6 +29,11 @@ import util.FileConverter;
  */
 
 public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
+
+    SharedFile sharedFile;
+
+
+
     public SharedFileAdapter(@NonNull Context context, ArrayList<SharedFile> sharedFiles) {
         super(context, 0, sharedFiles);
     }
@@ -34,7 +43,7 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
     public View getView(int position, View convertView, ViewGroup parent){
 
         //Get the data item for this position
-        SharedFile sharedFile = getItem(position);
+        sharedFile = getItem(position);
 
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_shared_file, parent, false);
@@ -49,9 +58,20 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
         TextView sharedFileSizeDownload = (TextView) convertView.findViewById(R.id.sizeDownloaded);
         TextView sharedFileData = (TextView) convertView.findViewById(R.id.date);
 
+
         //Looup view for event population
         Button sharedFileButtonBaixar = (Button) convertView.findViewById(R.id.btnSharedBaixar);
-        Button sharedFileButtonApagar = (Button) convertView.findViewById(R.id.btnSharedApagar);
+        Button sharedFileButtonApagar =(Button) convertView.findViewById(R.id.btnSharedApagar);
+
+        if(sharedFile.getStatus() == 0) {
+            sharedFileButtonBaixar.setVisibility(Button.INVISIBLE);
+        }else if(sharedFile.getStatus() ==  1){
+            sharedFileButtonBaixar.setBackgroundResource(R.color.colorPrimary);
+            sharedFileButtonBaixar.setText("Pausar");
+        }else{
+            sharedFileButtonBaixar.setBackgroundResource(R.color.colorYellow);
+            sharedFileButtonBaixar.setText("Continuar");
+        }
 
         // Populate the data into the progressbar
         progressBar.setMax(sharedFile.getSize());
@@ -65,13 +85,13 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
         sharedFileData.setText(sharedFile.getDate().toString());
 
         // Populate the event
-        sharedFileButtonBaixar.setOnClickListener(new View.OnClickListener() {
+        sharedFileButtonBaixar.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onClickBtnBaixar();
             }
         });
-        sharedFileButtonApagar.setOnClickListener(new View.OnClickListener() {
+        sharedFileButtonApagar.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onClickBtnApagar();
@@ -83,7 +103,20 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
     }
 
     public void onClickBtnBaixar(){
-        Toast.makeText(PoconeTorrent.getContext(), "Compartilhou", Toast.LENGTH_LONG).show();
+        /*if(sharedFile.getStatus() == 1){
+            sharedFileButtonBaixar.setBackgroundResource(R.color.colorYellow);
+            sharedFileButtonBaixar.setText("Continuar");
+            sharedFileButtonBaixar.setTextColor(Color.BLACK);
+            sharedFile.setStatus(-1);
+            notifyDataSetChanged();
+        }else if(sharedFile.getStatus() == -1){
+            sharedFileButtonBaixar.setBackgroundResource(R.color.colorPrimary);
+            sharedFileButtonBaixar.setText("Pausar");
+            sharedFile.setStatus(1);
+        }
+
+        new SharedFileCRUD().update(sharedFile);
+        */
     }
 
     public void onClickBtnApagar(){
