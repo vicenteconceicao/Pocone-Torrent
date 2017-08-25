@@ -87,6 +87,7 @@ public class SharedFileAdapter extends ArrayAdapter<SharedFile> {
         sharedFileName.setText(sharedFile.getFilename());
         sharedFileSize.setText(FileConverter.ConverterBytes((long)sharedFile.getSize()));
         sharedFileData.setText(sharedFile.getDate().toString());
+        sharedFileSizeDownload.setText(FileConverter.ConverterBytes(new File(sharedFile.getFilename()).length()));
 
         // Populate the event
         sharedFileButtonBaixar.setOnClickListener(new Button.OnClickListener() {
